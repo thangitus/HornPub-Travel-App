@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HornPub-Travel-App</string>
+    <string name="appName">Travel Assistant</string>
+    <string name="email">Email/Phone</string>
+    <string name="signIn">Sign In</string>
+    <string name="forgotPass">Forgot Password?</string>
+    <string name="signUp">SignUp</string>
+    <string name="or">OR</string>
 </resources>
