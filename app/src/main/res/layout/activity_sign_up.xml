@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="30dp"
-    tools:context=".SignUpActivity">
+    tools:context=".view.SignUpActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -45,6 +45,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:background="@drawable/border_radius"
+            android:inputType="text"
             android:paddingStart="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -103,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="@string/emailPhone"
+            android:text="@string/phone"
             android:textStyle="bold" />
 
         <EditText
@@ -112,6 +113,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:background="@drawable/border_radius"
+            android:inputType="phone"
             android:paddingStart="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -188,7 +190,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonSignIn"
+        android:id="@+id/buttonSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -196,7 +198,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/border_radius_solid"
-        android:text="@string/signIn"
+        android:text="@string/signUp"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

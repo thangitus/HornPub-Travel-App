@@ -11,4 +11,10 @@
     <string name="fullName">Full name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
+    <string name="viaSms">Via sms</string>
+    <string name="viaEmail">Via email</string>
+    <string name="submit">Submit</string>
+    <string name="enterPhone">Enter your phone number</string>
+    <string name="selectVia">Select which contact details should we use to reset your password:</string>
+
 </resources>
