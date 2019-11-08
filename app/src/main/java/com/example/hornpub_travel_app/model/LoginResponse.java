@@ -9,21 +9,17 @@ public class LoginResponse {
    @SerializedName("token")
    String token;
 
-   @SerializedName("message")
-   String message;
+   @SerializedName("emailVerified")
+   Boolean emailVerified;
 
-   @SerializedName("avatar")
-   String avatar;
+   @SerializedName("phoneVerified")
+   Boolean phoneVerified;
 
-   @SerializedName("fullName")
-   String fullName;
-
-   public LoginResponse(String userId, String token, String message, String avatar, String fullName) {
+   public LoginResponse(String userId, String token, Boolean emailVerified, Boolean phoneVerified) {
       this.userId = userId;
       this.token = token;
-      this.message = message;
-      this.avatar = avatar;
-      this.fullName = fullName;
+      this.emailVerified = emailVerified;
+      this.phoneVerified = phoneVerified;
    }
 
    public String getUserId() {
@@ -42,27 +38,19 @@ public class LoginResponse {
       this.token = token;
    }
 
-   public String getMessage() {
-      return message;
+   public Boolean getEmailVerified() {
+      return emailVerified;
    }
 
-   public void setMessage(String message) {
-      this.message = message;
+   public void setEmailVerified(Boolean emailVerified) {
+      this.emailVerified = emailVerified;
    }
 
-   public String getAvatar() {
-      return avatar;
+   public Boolean getPhoneVerified() {
+      return phoneVerified;
    }
 
-   public void setAvatar(String avatar) {
-      this.avatar = avatar;
-   }
-
-   public String getFullName() {
-      return fullName;
-   }
-
-   public void setFullName(String fullName) {
-      this.fullName = fullName;
+   public void setPhoneVerified(Boolean phoneVerified) {
+      this.phoneVerified = phoneVerified;
    }
 }

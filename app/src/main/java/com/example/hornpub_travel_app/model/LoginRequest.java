@@ -9,13 +9,11 @@ public class LoginRequest {
    @SerializedName("password")
    String password;
 
-   @SerializedName("accessToken")
-   String accessToken;
 
-   public LoginRequest(String emailPhone, String password, String accessToken) {
+
+   public LoginRequest(String emailPhone, String password) {
       this.emailPhone = emailPhone;
       this.password = password;
-      this.accessToken = accessToken;
    }
 
    public String getEmailPhone() {
@@ -34,11 +32,4 @@ public class LoginRequest {
       this.password = password;
    }
 
-   public String getAccessToken() {
-      return accessToken;
-   }
-
-   public void setAccessToken(String accessToken) {
-      this.accessToken = accessToken;
-   }
 }

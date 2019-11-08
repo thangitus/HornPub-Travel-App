@@ -33,15 +33,26 @@ public class RegisterResponse {
    @SerializedName("phone_verified")
    Boolean phone_verified;
 
-   @SerializedName("message")
-   String message;
 
-   public String getMessage() {
-      return message;
+   public RegisterResponse(int id, String username, String full_name, String email, String phone, String address, String dob, Boolean gender, Boolean email_verified, Boolean phone_verified){
+      this.username = username;
+      this.full_name = full_name;
+      this.email = email;
+      this.phone = phone;
+      this.address = address;
+      this.dob = dob;
+      this.gender = gender;
+      this.email_verified = email_verified;
+      this.phone_verified = phone_verified;
    }
 
-   public void setMessage(String message) {
-      this.message = message;
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
    }
 
    public String getUsername() {
@@ -116,11 +127,17 @@ public class RegisterResponse {
       this.phone_verified = phone_verified;
    }
 
-   public int getId() {
-      return id;
-   }
 
-   public void setId(int id) {
-      this.id = id;
+   public RegisterResponse(RegisterResponse registerResponse) {
+      this.id = registerResponse.getId();
+      this.username = registerResponse.getUsername();
+      this.full_name = registerResponse.getFull_name();
+      this.email = registerResponse.getEmail();
+      this.phone = registerResponse.getPhone();
+      this.address = registerResponse.getAddress();
+      this.dob = registerResponse.getDob();
+      this.gender = registerResponse.getGender();
+      this.email_verified = registerResponse.getEmail_verified();
+      this.phone_verified = registerResponse.getPhone_verified();
    }
 }
