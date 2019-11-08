@@ -53,4 +53,11 @@ public class LoginResponse {
    public void setPhoneVerified(Boolean phoneVerified) {
       this.phoneVerified = phoneVerified;
    }
+
+   public LoginResponse(LoginResponse loginResponse) {
+      this.userId = loginResponse.getUserId();
+      this.token = loginResponse.getToken();
+      this.emailVerified = loginResponse.getEmailVerified();
+      this.phoneVerified = loginResponse.getPhoneVerified();
+   }
 }
