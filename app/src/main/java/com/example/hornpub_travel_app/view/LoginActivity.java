@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hornpub_travel_app.ListTourActivity;
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.model.LoginRequest;
 import com.example.hornpub_travel_app.model.LoginResponse;
@@ -26,7 +27,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
    TextView tvSignUp, tvForgotPassWord;
-   Intent intentToSignUp, intentToForgotPassWord;
+   Intent intentToSignUp, intentToForgotPassWord, intentToListTour;
    APIService apiService;
    LoginRequest loginRequest;
    LoginResponse loginResponse;
@@ -47,8 +48,9 @@ public class LoginActivity extends AppCompatActivity {
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
       if (loginResponse != null) {
-         Toast.makeText(this, "Đã đăng nhập!", Toast.LENGTH_SHORT).show();
-         //Đoạn này đổi màn hình
+         intentToListTour = new Intent(this, ListTourActivity.class);
+         intentToListTour.putExtra("token", loginResponse.getToken());
+         startActivity(intentToListTour);
       }
       tvSignUp.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -85,10 +87,11 @@ public class LoginActivity extends AppCompatActivity {
                NetworkProvider.getInstance().setLoginResponse(loginResponse);
                saveLoginResponse(loginResponse);
             }
-            if(response.code()==400){
+            if (response.code() == 400) {
                Toast.makeText(LoginActivity.this, "Email/Phone hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();
             }
          }
+
          @Override
          public void onFailure(Call<LoginResponse> call, Throwable t) {
 

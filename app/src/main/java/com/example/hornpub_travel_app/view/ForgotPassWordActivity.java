@@ -3,26 +3,66 @@ package com.example.hornpub_travel_app.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hornpub_travel_app.R;
 
 public class ForgotPassWordActivity extends AppCompatActivity {
-RadioGroup radioGroupViaChoice;
+   LinearLayout viaSMS, viaEmail;
+   EditText editTextInput;
+   ImageView imgSMS, imgEmail;
+   TextView tvSMS, tvEmail;
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_forgot_pass_word);
       mapping();
-      radioGroupViaChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+      viaEmail.setOnClickListener(new View.OnClickListener() {
          @Override
-         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            Toast.makeText(ForgotPassWordActivity.this, "" + i, Toast.LENGTH_SHORT).show();
+         public void onClick(View view) {
+            choiceEmail();
          }
       });
+      viaSMS.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+            choiceSMS();
+         }
+      });
+      
    }
-   private  void mapping(){
-      radioGroupViaChoice=findViewById(R.id.radioGroupVia);
+
+   private void mapping() {
+      viaSMS = findViewById(R.id.viaSMS);
+      viaEmail = findViewById(R.id.viaEmail);
+      editTextInput = findViewById(R.id.editTextVia);
+      imgSMS = findViewById(R.id.imgViaSMS);
+      imgEmail = findViewById(R.id.imgViaEmail);
+      tvEmail = findViewById(R.id.textViewViaEmail);
+      tvSMS = findViewById(R.id.textViewViaSms);
+   }
+
+   private void choiceSMS() {
+      imgSMS.setImageResource(R.drawable.icons8_sms_blue_96);
+      tvSMS.setTextColor(getResources().getColor(R.color.colorBlue));
+      imgEmail.setImageResource(R.drawable.icons8_mail_gray_96);
+      tvEmail.setTextColor(getResources().getColor(R.color.colorGray));
+      editTextInput.setHint(getResources().getString(R.string.enterPhone));
+   }
+
+   private void choiceEmail() {
+      imgEmail.setImageResource(R.drawable.icons8_mail_blue_96);
+      tvEmail.setTextColor(getResources().getColor(R.color.colorBlue));
+      imgSMS.setImageResource(R.drawable.icons8_sms_gray_96);
+      tvSMS.setTextColor(getResources().getColor(R.color.colorGray));
+      editTextInput.setHint(getResources().getString(R.string.enterEmail));
    }
 }

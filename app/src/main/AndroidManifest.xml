@@ -7,21 +7,18 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.ForgotPassWordActivity">
-
-        </activity>
+        <activity android:name=".ListTourActivity"></activity>
+        <activity android:name=".view.ForgotPassWordActivity"></activity>
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".view.SignUpActivity"
-            android:parentActivityName=".view.LoginActivity">
-
-        </activity>
+            android:parentActivityName=".view.LoginActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

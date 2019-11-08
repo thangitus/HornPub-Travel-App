@@ -19,8 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupVia"
+    <LinearLayout
+        android:id="@+id/linearLayoutGroupVia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -28,40 +28,21 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:weightSum="2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewViaChoice">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <RadioButton
-                android:id="@+id/radioButtonViaSms"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:button="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
-                android:id="@+id/linearLayoutViaSMS"
-                android:layout_width="match_parent"
+                android:id="@+id/viaSMS"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shadow"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/imgViaSMS"
@@ -82,27 +63,11 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorBlue" />
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <RadioButton
-                android:id="@+id/radioButtonViaEmail"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:button="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
                 android:id="@+id/viaEmail"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shadow"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -121,7 +86,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/icons8_mail_gray_100" />
+                    android:src="@drawable/icons8_mail_gray_96" />
 
                 <TextView
                     android:id="@+id/textViewViaEmail"
@@ -134,9 +99,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorGray" />
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </RadioGroup>
+        </LinearLayout>
 
     <EditText
         android:id="@+id/editTextVia"
@@ -146,14 +109,13 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/border_radius"
-        android:hint="@string/enterPhone"
         android:paddingStart="15dp"
-        android:paddingTop="10dp"
+        android:paddingTop="15dp"
         android:paddingEnd="15dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroupVia" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutGroupVia" />
 
     <Button
         android:id="@+id/buttonSignIn"
