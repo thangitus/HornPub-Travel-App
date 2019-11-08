@@ -17,6 +17,7 @@
 
         </activity>
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".view.SignUpActivity"
             android:parentActivityName=".view.LoginActivity">
 

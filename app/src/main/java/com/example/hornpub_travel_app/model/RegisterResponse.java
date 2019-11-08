@@ -3,6 +3,9 @@ package com.example.hornpub_travel_app.model;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterResponse {
+   @SerializedName("id")
+   int id;
+
    @SerializedName("username")
    String username;
 
@@ -29,6 +32,17 @@ public class RegisterResponse {
 
    @SerializedName("phone_verified")
    Boolean phone_verified;
+
+   @SerializedName("message")
+   String message;
+
+   public String getMessage() {
+      return message;
+   }
+
+   public void setMessage(String message) {
+      this.message = message;
+   }
 
    public String getUsername() {
       return username;
@@ -100,5 +114,13 @@ public class RegisterResponse {
 
    public void setPhone_verified(Boolean phone_verified) {
       this.phone_verified = phone_verified;
+   }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
    }
 }

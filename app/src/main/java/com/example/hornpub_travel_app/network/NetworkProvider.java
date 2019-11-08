@@ -1,7 +1,7 @@
 package com.example.hornpub_travel_app.network;
 
 import com.example.hornpub_travel_app.manager.Constants;
-import com.google.gson.Gson;
+import com.example.hornpub_travel_app.model.RegisterResponse;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
@@ -12,6 +12,11 @@ public final class NetworkProvider {
    private static volatile NetworkProvider mInstance = null;
    private Retrofit retrofit;
 
+   public void setRegisterResponse(RegisterResponse registerResponse) {
+      this.registerResponse = registerResponse;
+   }
+
+   private RegisterResponse registerResponse;
    private NetworkProvider() {
       OkHttpClient client = new OkHttpClient.Builder().build();
       retrofit = new Retrofit.Builder()

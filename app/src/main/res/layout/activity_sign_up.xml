@@ -50,12 +50,13 @@
                     android:textStyle="bold" />
 
                 <EditText
+
                     android:id="@+id/editTextFullName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/border_radius"
-                    android:inputType="text"
+                    android:inputType="textPersonName"
                     android:paddingStart="15dp"
                     android:paddingTop="20dp"
                     android:paddingEnd="15dp"
@@ -84,7 +85,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/border_radius"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:paddingStart="15dp"
                     android:paddingTop="20dp"
                     android:paddingEnd="15dp"

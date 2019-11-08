@@ -14,6 +14,5 @@ public interface APIService {
    Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
    @POST("/user/register")
-   Call<RegisterResponse> login(@Body RegisterRequest registerRequest);
-
+   Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
 }
