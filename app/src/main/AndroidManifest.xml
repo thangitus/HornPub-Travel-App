@@ -13,12 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ListTourActivity"></activity>
-        <activity android:name=".view.ForgotPassWordActivity"></activity>
+        <activity android:name=".TravelList"></activity>
+        <activity android:name=".ListTourActivity" />
+        <activity android:name=".view.ForgotPassWordActivity" />
         <activity
             android:name=".view.SignUpActivity"
             android:parentActivityName=".view.LoginActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

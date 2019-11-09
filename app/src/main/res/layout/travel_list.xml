@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tour_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/tour_detail_picture"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:src="@drawable/demo"
+                android:scaleType="center"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/direction"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="1"/>
+                <TextView
+                    android:id="@+id/tour_detail_direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="TP. HCM - Hà Nội"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="25"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/copy"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="1"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/calendar"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="1"/>
+                <TextView
+                    android:id="@+id/tour_detail_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="14/06/2019 - 20/06/2019"
+                    android:gravity="center_vertical"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="25"
+                    android:layout_columnSpan="2"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/users"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="1"/>
+                <TextView
+                    android:id="@+id/tour_detail_customers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="2 người lớn"
+                    android:gravity="center_vertical"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="25"
+                    android:layout_columnSpan="2"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/price"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="1"/>
+                <TextView
+                    android:id="@+id/tour_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="500.000 - 1.000.000 VNĐ"
+                    android:textColor="#FFBA00"
+                    android:gravity="center_vertical"
+                    android:layout_margin="7dp"
+                    android:layout_columnWeight="25"
+                    android:layout_columnSpan="2"
+                    android:textStyle="bold"/>
+
+            </GridLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
