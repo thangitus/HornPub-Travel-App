@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="500.000 - 1.000.000 VNĐ"
-                    android:textColor="#FFBA00"
+                    android:textColor="@color/colorBlue"
                     android:gravity="center_vertical"
                     android:layout_margin="7dp"
                     android:layout_columnWeight="25"

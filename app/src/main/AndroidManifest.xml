@@ -13,8 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TravelList"></activity>
-        <activity android:name=".ListTourActivity" />
+        <activity android:name=".view.ListTourActivity" />
         <activity android:name=".view.ForgotPassWordActivity" />
         <activity
             android:name=".view.SignUpActivity"

@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (response.code() == 200) {
                registerResponse = new RegisterResponse(response.body());
                NetworkProvider.getInstance().setRegisterResponse(registerResponse);
-//               finish();
+               finish();
             }
             if (response.code() == 400) {
                try {

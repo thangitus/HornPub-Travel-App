@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hornpub_travel_app.ListTourActivity;
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.model.LoginRequest;
 import com.example.hornpub_travel_app.model.LoginResponse;
@@ -47,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
       mapping();
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
+      intentToListTour = new Intent(this, ListTourActivity.class);
       if (loginResponse != null) {
-         intentToListTour = new Intent(this, ListTourActivity.class);
          intentToListTour.putExtra("token", loginResponse.getToken());
          startActivity(intentToListTour);
       }
@@ -86,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                loginResponse = new LoginResponse(response.body());
                NetworkProvider.getInstance().setLoginResponse(loginResponse);
                saveLoginResponse(loginResponse);
+               intentToListTour.putExtra("token", loginResponse.getToken());
+               startActivity(intentToListTour);
             }
             if (response.code() == 400) {
                Toast.makeText(LoginActivity.this, "Email/Phone hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();

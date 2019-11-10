@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app;
+package com.example.hornpub_travel_app.model;
 
 public class TravelListData {
     private String picture, direction, time, customer, price;

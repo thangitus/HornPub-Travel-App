@@ -29,11 +29,11 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <LinearLayout
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
 
             <LinearLayout
                 android:id="@+id/linearLayoutFullName"
@@ -50,13 +50,12 @@
                     android:textStyle="bold" />
 
                 <EditText
-
                     android:id="@+id/editTextFullName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/border_radius"
-                    android:inputType="textPersonName"
+                    android:inputType="textCapWords"
                     android:paddingStart="15dp"
                     android:paddingTop="20dp"
                     android:paddingEnd="15dp"
