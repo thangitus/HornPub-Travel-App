@@ -12,18 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hornpub_travel_app.R;
+import com.example.hornpub_travel_app.model.Tour;
 import com.example.hornpub_travel_app.model.TravelListData;
 
 import java.util.List;
 
 public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.MyViewHolder> {
 
-   private List<TravelListData> travelList;
+   List<Tour> tourList;
    private LayoutInflater mLayoutInflater;
    private Context mContext;
 
-   public TravelListAdapter(Context context, List<TravelListData> travelList) {
-      this.travelList = travelList;
+   public TravelListAdapter(Context context, List<Tour> tourList) {
+      this.tourList = tourList;
       this.mContext = context;
       this.mLayoutInflater = LayoutInflater.from(context);
    }
@@ -66,16 +67,16 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.My
 
    @Override
    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-      TravelListData travelListData = travelList.get(position);
+      Tour tour = tourList.get(position);
       holder.picture.setImageResource(R.drawable.demo);
-      holder.direction.setText(travelListData.getDirection());
-      holder.time.setText(travelListData.getTime());
-      holder.customer.setText(travelListData.getCustomer());
-      holder.price.setText(travelListData.getPrice());
+      holder.direction.setText(tour.getName());
+      holder.time.setText(tour.getStartDate());
+      holder.customer.setText(tour.getAdults());
+      holder.price.setText(tour.getMinCost());
    }
 
    @Override
    public int getItemCount() {
-      return travelList.size();
+      return tourList.size();
    }
 }

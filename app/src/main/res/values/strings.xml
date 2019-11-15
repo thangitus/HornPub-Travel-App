@@ -17,5 +17,7 @@
     <string name="enterPhone">Enter your phone number</string>
     <string name="enterEmail">Enter your email</string>
     <string name="selectVia">Select which contact details should we use to reset your password:</string>
+    <string name="facebook_app_id">473939903223861</string>
+    <string name="fb_login_protocol_scheme">fb473939903223861</string>
 
 </resources>

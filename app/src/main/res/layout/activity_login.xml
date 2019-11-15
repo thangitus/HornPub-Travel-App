@@ -52,6 +52,7 @@
             android:text="@string/emailPhone" />
 
         <EditText
+            android:inputType="text"
             android:id="@+id/editTextUserName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -154,29 +155,34 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewOr">
 
-        <ImageButton
-            android:id="@+id/buttonGoogle"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            android:background="#0000"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icons8_google_480" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/buttonGoogle"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:background="#0000"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/icons8_google_480" />-->
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
 
-        <ImageButton
-            android:id="@+id/buttonFaceBook"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:background="#0000"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icons8_facebook_480" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/buttonFaceBook"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:background="#0000"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/icons8_facebook_480" />-->
     </LinearLayout>
 
 

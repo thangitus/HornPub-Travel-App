@@ -12,16 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class NetworkProvider {
    private static volatile NetworkProvider mInstance = null;
    private Retrofit retrofit;
-   private RegisterResponse registerResponse;
-   private LoginResponse loginResponse;
 
-   public void setLoginResponse(LoginResponse loginResponse) {
-      this.loginResponse = loginResponse;
-   }
-
-   public void setRegisterResponse(RegisterResponse registerResponse) {
-      this.registerResponse = registerResponse;
-   }
 
    private NetworkProvider() {
       OkHttpClient client = new OkHttpClient.Builder().build();

@@ -1,10 +1,16 @@
 package com.example.hornpub_travel_app.view;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +23,15 @@ import com.example.hornpub_travel_app.model.LoginRequest;
 import com.example.hornpub_travel_app.model.LoginResponse;
 import com.example.hornpub_travel_app.network.APIService;
 import com.example.hornpub_travel_app.network.NetworkProvider;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
    LoginResponse loginResponse;
    EditText editTextUserName, editTextPass;
    Button buttonSignIn;
-   ImageButton buttonGoogle, buttonFaceBook;
    SharedPreferences mPrefs;
-
+   CallbackManager callbackManager;
+   LoginButton loginButton;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +57,15 @@ public class LoginActivity extends AppCompatActivity {
       intentToForgotPassWord = new Intent(this, ForgotPassWordActivity.class);
       apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       mapping();
+      callbackManager = CallbackManager.Factory.create();
+
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
       intentToListTour = new Intent(this, ListTourActivity.class);
-      if (loginResponse != null) {
-         intentToListTour.putExtra("token", loginResponse.getToken());
-         startActivity(intentToListTour);
-      }
+//      if (loginResponse != null) {
+//         intentToListTour.putExtra("token", loginResponse.getToken());
+//         startActivity(intentToListTour);
+//      }
       tvSignUp.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
@@ -70,6 +86,29 @@ public class LoginActivity extends AppCompatActivity {
                sendLoginRequest(loginRequest);
          }
       });
+      loginButton.setReadPermissions("email");
+      setLoginButton();
+   }
+
+   private void setLoginButton() {
+      loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+         @Override
+         public void onSuccess(LoginResult loginResult) {
+            Log.d("fb", "success");
+
+            String accessToken = loginResult.getAccessToken().getToken();
+         }
+
+         @Override
+         public void onCancel() {
+
+         }
+
+         @Override
+         public void onError(FacebookException error) {
+            Log.d("fb", "err");
+         }
+      });
    }
 
    private void sendLoginRequest(LoginRequest loginRequest) {
@@ -78,11 +117,9 @@ public class LoginActivity extends AppCompatActivity {
       call.enqueue(new Callback<LoginResponse>() {
          @Override
          public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
             //If Success(200 - OK)
             if (response.code() == 200) {
                loginResponse = new LoginResponse(response.body());
-               NetworkProvider.getInstance().setLoginResponse(loginResponse);
                saveLoginResponse(loginResponse);
                intentToListTour.putExtra("token", loginResponse.getToken());
                startActivity(intentToListTour);
@@ -124,8 +161,9 @@ public class LoginActivity extends AppCompatActivity {
       editTextUserName = findViewById(R.id.editTextUserName);
       editTextPass = findViewById(R.id.editTextPass);
       buttonSignIn = findViewById(R.id.buttonSignIn);
-      buttonFaceBook = findViewById(R.id.buttonFaceBook);
-      buttonGoogle = findViewById(R.id.buttonGoogle);
+//      buttonFaceBook = findViewById(R.id.buttonFaceBook);
+//      buttonGoogle = findViewById(R.id.buttonGoogle);
+      loginButton = findViewById(R.id.login_button);
    }
 
    private boolean checkData() {
@@ -142,5 +180,15 @@ public class LoginActivity extends AppCompatActivity {
       }
       loginRequest = new LoginRequest(userName, pass);
       return true;
+   }
+
+   private void sendLoginFbRequest(String accessToken) {
+
+   }
+
+   @Override
+   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+      callbackManager.onActivityResult(requestCode, resultCode, data);
+      super.onActivityResult(requestCode, resultCode, data);
    }
 }
