@@ -20,13 +20,11 @@ import com.example.hornpub_travel_app.model.TravelListData;
 import com.example.hornpub_travel_app.network.APIService;
 import com.example.hornpub_travel_app.network.NetworkProvider;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +47,7 @@ public class ListTourActivity extends AppCompatActivity {
       setContentView(R.layout.activity_list_tour);
       intent = getIntent();
       token = intent.getStringExtra("token");
-//      listTourRequest = new ListTourRequest(1, 7, null, null);
+      listTourRequest = new ListTourRequest(1, 7, null, null);
       sendListTourRequest(listTourRequest);
       createRecyclerView();
    }
@@ -60,27 +58,26 @@ public class ListTourActivity extends AppCompatActivity {
       Map<String, String> params = new HashMap<String, String>();
       params.put("rowPerPage", "8");
       params.put("pageNum", "1");
-      Call<ResponseBody> call = apiService.getListTour(token, params);
+      Call<ListTourResponse> call = apiService.getListTour(token, params);
 //      Call<ListTourResponse> call = apiService.getListTour(token, listTourRequest);
+      call.enqueue(new Callback<ListTourResponse>() {
+         @Override
+         public void onResponse(Call<ListTourResponse> call, Response<ListTourResponse> response) {
+            if (response.code() == 200) {
+               listTourResponse = new ListTourResponse(response.body());
+               tourList = new ArrayList<>();
+               tourList = listTourResponse.getTours();
+            } else if (response.code() == 500) {
+               Toast.makeText(ListTourActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+            }
+         }
 
-     call.enqueue(new Callback<ResponseBody>() {
-        @Override
-        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-           try {
-              String body= response.body().string();
-              Log.d(TAG,body);
-           } catch (IOException e) {
-              e.printStackTrace();
-           }
+         @Override
+         public void onFailure(Call<ListTourResponse> call, Throwable t) {
+            Log.d(TAG, "onFailure");
+         }
+      });
 
-
-        }
-
-        @Override
-        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-        }
-     });
    }
 
    private void createRecyclerView() {

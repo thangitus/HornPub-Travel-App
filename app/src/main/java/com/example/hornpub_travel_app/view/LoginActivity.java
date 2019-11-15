@@ -62,10 +62,11 @@ public class LoginActivity extends AppCompatActivity {
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
       intentToListTour = new Intent(this, ListTourActivity.class);
-//      if (loginResponse != null) {
-//         intentToListTour.putExtra("token", loginResponse.getToken());
-//         startActivity(intentToListTour);
-//      }
+      if (loginResponse != null) {
+         intentToListTour.putExtra("token", loginResponse.getToken());
+         startActivity(intentToListTour);
+         finish();
+      }
       tvSignUp.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {

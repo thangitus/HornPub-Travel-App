@@ -26,6 +26,6 @@ public interface APIService {
 
 
    @GET("/tour/list")
-   Call<ResponseBody> getListTour(@Header("Authorization") String token, @QueryMap Map<String,String> params);
+   Call<ListTourResponse> getListTour(@Header("Authorization") String token, @QueryMap Map<String,String> params);
 
 }

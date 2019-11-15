@@ -1,8 +1,6 @@
 package com.example.hornpub_travel_app.network;
 
 import com.example.hornpub_travel_app.manager.Constants;
-import com.example.hornpub_travel_app.model.LoginResponse;
-import com.example.hornpub_travel_app.model.RegisterResponse;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
