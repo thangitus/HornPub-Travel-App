@@ -19,5 +19,13 @@
     <string name="selectVia">Select which contact details should we use to reset your password:</string>
     <string name="facebook_app_id">473939903223861</string>
     <string name="fb_login_protocol_scheme">fb473939903223861</string>
+    <string name="title_my_tour">Chuyến đi gợi ý</string>
+    <string name="title_list">Chuyến đi</string>
+    <string name="title_notification">Thông báo</string>
+    <string name="title_setting">Cài đặt</string>
+    <string name="title_create_tour">Tạo chuyến đi</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

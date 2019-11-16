@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigationListTour"
+        android:icon="@drawable/ic_list"
+        android:title="@string/title_my_tour" />
+    <item
+        android:id="@+id/navigationMyTour"
+        android:icon="@drawable/ic_clock"
+        android:title="@string/title_list" />
+    <item
+        android:id="@+id/navigationCreateTour"
+        android:icon="@drawable/ic_map"
+        android:title="@string/title_create_tour" />
+    <item
+        android:id="@+id/navigationNotification"
+        android:icon="@drawable/ic_bell"
+        android:title="@string/title_notification" />
+    <item
+        android:id="@+id/navigationSetting"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/title_setting" />
+</menu>

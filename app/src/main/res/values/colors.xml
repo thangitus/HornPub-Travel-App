@@ -7,4 +7,6 @@
     <color name="colorBlue">#006ECF</color>
     <color name="colorWhite">#FFFF</color>
     <color name="colorGray">#CCCCCC</color>
+    <color name="colorGrayDarker">#949494</color>
+    <color name="colorTransparency">#00FFFFFF</color>
 </resources>

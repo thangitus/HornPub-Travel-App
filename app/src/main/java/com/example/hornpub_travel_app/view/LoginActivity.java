@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
-      intentToListTour = new Intent(this, ListTourActivity.class);
+      intentToListTour = new Intent(this, HomeActivity.class);
       if (loginResponse != null) {
          intentToListTour.putExtra("token", loginResponse.getToken());
          startActivity(intentToListTour);
