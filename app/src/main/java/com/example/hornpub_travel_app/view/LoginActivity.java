@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
       mapping();
       callbackManager = CallbackManager.Factory.create();
 
+
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       loginResponse = loadLoginResponse();
       intentToListTour = new Intent(this, ListTourActivity.class);
@@ -119,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
          @Override
          public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
             //If Success(200 - OK)
+            Toast.makeText(LoginActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
             if (response.code() == 200) {
                loginResponse = new LoginResponse(response.body());
                saveLoginResponse(loginResponse);

@@ -71,7 +71,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.My
       holder.picture.setImageResource(R.drawable.demo);
       holder.direction.setText(tour.getName());
       holder.time.setText(tour.getStartDate());
-      holder.customer.setText(tour.getAdults());
+      holder.customer.setText(tour.getAdults()+"");
       holder.price.setText(tour.getMinCost());
    }
 

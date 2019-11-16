@@ -41,6 +41,7 @@ public class ListTourActivity extends AppCompatActivity {
    private RecyclerView recyclerView;
    private TravelListAdapter travelListAdapter;
 
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -49,24 +50,28 @@ public class ListTourActivity extends AppCompatActivity {
       token = intent.getStringExtra("token");
       listTourRequest = new ListTourRequest(1, 7, null, null);
       sendListTourRequest(listTourRequest);
-      createRecyclerView();
+
+//      createRecyclerView();
    }
 
-   private void sendListTourRequest(final ListTourRequest listTourRequest) {
+ private void sendListTourRequest(final ListTourRequest listTourRequest) {
       apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
 
       Map<String, String> params = new HashMap<String, String>();
       params.put("rowPerPage", "8");
       params.put("pageNum", "1");
       Call<ListTourResponse> call = apiService.getListTour(token, params);
+
 //      Call<ListTourResponse> call = apiService.getListTour(token, listTourRequest);
       call.enqueue(new Callback<ListTourResponse>() {
          @Override
          public void onResponse(Call<ListTourResponse> call, Response<ListTourResponse> response) {
             if (response.code() == 200) {
                listTourResponse = new ListTourResponse(response.body());
+//               Toast.makeText(ListTourActivity.this, listTourResponse.getTotal() + "", Toast.LENGTH_LONG).show();
                tourList = new ArrayList<>();
                tourList = listTourResponse.getTours();
+               createRecyclerView();
             } else if (response.code() == 500) {
                Toast.makeText(ListTourActivity.this, response.message(), Toast.LENGTH_SHORT).show();
             }
@@ -80,7 +85,7 @@ public class ListTourActivity extends AppCompatActivity {
 
    }
 
-   private void createRecyclerView() {
+   synchronized private void createRecyclerView() {
       recyclerView = findViewById(R.id.myRecyclerView);
       travelListAdapter = new TravelListAdapter(this, tourList);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
