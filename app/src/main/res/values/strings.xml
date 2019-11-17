@@ -1,5 +1,4 @@
 <resources>
-    <string name="googlemap">AIzaSyAQ8knbZAni7_oD-LpOrpOpceMyerMGwXE</string>
     <string name="app_name">HornPub-Travel</string>
     <string name="appName">Travel Assistant</string>
     <string name="emailPhone">Email/Phone</string>
@@ -36,6 +35,7 @@
     <string name="chooseTourImage">Choose tour image</string>
     <string name="privateTrip">This is your private trip ?</string>
     <string name="create">Create</string>
+    <string name="api_key">AIzaSyBORpyUkCKvcY11reBSXpEbe1NdETBE-aQ</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
