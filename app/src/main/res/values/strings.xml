@@ -1,4 +1,5 @@
 <resources>
+    <string name="googlemap">AIzaSyAQ8knbZAni7_oD-LpOrpOpceMyerMGwXE</string>
     <string name="app_name">HornPub-Travel</string>
     <string name="appName">Travel Assistant</string>
     <string name="emailPhone">Email/Phone</string>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_login);
+
       intentToSignUp = new Intent(this, SignUpActivity.class);
       intentToForgotPassWord = new Intent(this, ForgotPassWordActivity.class);
       apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
