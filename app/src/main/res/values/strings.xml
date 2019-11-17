@@ -36,6 +36,14 @@
     <string name="privateTrip">This is your private trip ?</string>
     <string name="create">Create</string>
     <string name="api_key">AIzaSyBORpyUkCKvcY11reBSXpEbe1NdETBE-aQ</string>
+    <string name="stopPointName"> Stop point name</string>
+    <string name="serviceType">Service type</string>
+    <string name="address">Address</string>
+    <string name="province"> Province</string>
+    <string name="arriveAt">Arrive at</string>
+    <string name="leaveAt">Leave at</string>
+    <string name="stopPointInfo">Stop point information</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
