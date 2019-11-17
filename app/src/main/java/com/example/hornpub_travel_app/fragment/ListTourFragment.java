@@ -74,7 +74,7 @@ public class ListTourFragment extends Fragment {
       });
    }
 
-   synchronized private void createRecyclerView() {
+   private void createRecyclerView() {
       recyclerView = getView().findViewById(R.id.myRecyclerView);
       TravelListAdapter travelListAdapter;
       travelListAdapter = new TravelListAdapter(getContext(), tourList);

@@ -24,6 +24,9 @@
     <string name="title_notification">Thông báo</string>
     <string name="title_setting">Cài đặt</string>
     <string name="title_create_tour">Tạo chuyến đi</string>
+    <string name="title_search">Search...</string>
+    <string name="tourName">Tour name</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
