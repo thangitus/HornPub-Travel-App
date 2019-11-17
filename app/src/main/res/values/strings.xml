@@ -26,6 +26,15 @@
     <string name="title_create_tour">Tạo chuyến đi</string>
     <string name="title_search">Search...</string>
     <string name="tourName">Tour name</string>
+    <string name="startDate">Start date</string>
+    <string name="endDate">End date</string>
+    <string name="adult">Adult</string>
+    <string name="children">Children</string>
+    <string name="minCost">Min cost</string>
+    <string name="maxCost">Max cost</string>
+    <string name="chooseTourImage">Choose tour image</string>
+    <string name="privateTrip">This is your private trip ?</string>
+    <string name="create">Create</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

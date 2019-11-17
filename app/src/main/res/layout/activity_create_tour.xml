@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/startDate"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/endDate"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/adult"
                 android:textStyle="bold" />
 
             <EditText
@@ -200,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/children"
                 android:textStyle="bold" />
 
             <EditText
@@ -238,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/minCost"
                 android:textStyle="bold" />
 
             <EditText
@@ -265,7 +265,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/tourName"
+                android:text="@string/maxCost"
                 android:textStyle="bold" />
 
             <EditText
@@ -298,7 +298,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
-            android:text="@string/tourName"
+            android:text="@string/chooseTourImage"
             android:textStyle="bold" />
 
         <ImageButton
@@ -324,18 +324,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:tag="@string/tourName"
-            android:text="@string/tourName" />
+            android:text="@string/privateTrip" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/buttonSignIn"
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/border_radius_solid"
-        android:text="@string/signIn"
+        android:text="@string/create"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
