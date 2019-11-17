@@ -16,7 +16,7 @@
         android:layout_marginTop="15dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -33,11 +33,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:background="@drawable/border_radius"
+            android:gravity="center_vertical"
             android:inputType="textCapWords"
             android:paddingStart="15dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="15dp"
-            android:paddingBottom="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
@@ -49,7 +47,7 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutTourName">
 
         <LinearLayout
@@ -76,12 +74,8 @@
                     android:id="@+id/textViewStartDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:paddingStart="10dp"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="20dp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorBlue"
+                    android:gravity="center_vertical"
+                    android:paddingStart="15dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarStart"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -124,13 +118,13 @@
                     android:id="@+id/textViewEndDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:paddingStart="15dp"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="20dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarEnd"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/buttonCalendarEnd"
@@ -155,7 +149,7 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutDate">
 
         <LinearLayout
@@ -179,10 +173,8 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
 
@@ -222,7 +214,7 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutAdults">
 
         <LinearLayout
@@ -274,10 +266,8 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
     </LinearLayout>

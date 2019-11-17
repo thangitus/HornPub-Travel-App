@@ -1,8 +1,13 @@
 package com.example.hornpub_travel_app.fragment;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +34,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -57,13 +69,17 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    public void onMapReady(GoogleMap googleMap) {
 
       MapsInitializer.initialize(getContext());
+      LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+      @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
       mGoogleMap = googleMap;
-      LatLng latLng = new LatLng(-33.867, 151.206);
-      mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-      mGoogleMap.setMyLocationEnabled(true);
+      mGoogleMap.setMyLocationEnabled(false);
+      mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 14));
+
+      mGoogleMap.setOnMapClickListener(googleMapClickListener());
       mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
          @Override
          public void onMyLocationChange(Location location) {
+
             if (currentMarker != null) {
                currentMarker.remove();
                currentMarker = null;
@@ -71,6 +87,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
                currentMarker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
          }
       });
+
    }
 
 
@@ -83,5 +100,29 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
          mapView.onResume();
          mapView.getMapAsync(this);
       }
+   }
+
+   private GoogleMap.OnMapClickListener googleMapClickListener() {
+      GoogleMap.OnMapClickListener listener = new GoogleMap.OnMapClickListener() {
+         @Override
+         public void onMapClick(LatLng latLng) {
+
+            getAddress(latLng);
+         }
+      };
+      return listener;
+   }
+
+   private List<String> getAddress(LatLng latLng) {
+      List<String> res = new ArrayList<>();
+      final List<Address> addresses;
+      Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+      try {
+         addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+         Log.wtf("map", "Address: " + addresses.get(0).getAdminArea());
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      return res;
    }
 }

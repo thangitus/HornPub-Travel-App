@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.CreateStopPointActivity"></activity>
+        <activity android:name=".view.CreateStopPointActivity">
+
+        </activity>
         <activity
             android:name=".view.CreateTourActivity"
-            android:parentActivityName=".view.HomeActivity"></activity>
+            android:parentActivityName=".view.HomeActivity">
+
+        </activity>
         <activity android:name=".view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,6 +3,7 @@ package com.example.hornpub_travel_app.view;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,12 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hornpub_travel_app.R;
-import com.example.hornpub_travel_app.fragment.MapViewFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,8 +32,8 @@ public class CreateTourActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_create_tour);
+      Intent intent = getIntent();
       mapping();
-      tvEndDay.setText("AAAAA");
 
       buttonStartDate.setOnClickListener(new View.OnClickListener() {
          @Override
