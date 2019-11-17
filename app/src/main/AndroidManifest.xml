@@ -4,6 +4,7 @@
     package="com.example.hornpub_travel_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,18 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".view.CreateStopPointActivity"></activity>
         <activity
             android:name=".view.CreateTourActivity"
-            android:parentActivityName=".view.HomeActivity">
-
-        </activity>
+            android:parentActivityName=".view.HomeActivity"></activity>
         <activity android:name=".view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -52,7 +51,7 @@
             android:name=".view.SignUpActivity"
             android:parentActivityName=".view.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.LoginActivity"></activity>
+        <activity android:name=".view.LoginActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

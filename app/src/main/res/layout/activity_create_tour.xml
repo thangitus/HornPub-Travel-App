@@ -60,7 +60,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/startDate"
@@ -72,20 +72,19 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius">
 
-                <EditText
-                    android:id="@+id/editTextStartDate"
+                <TextView
+                    android:id="@+id/textViewStartDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/colorTransparency"
-                    android:editable="false"
                     android:paddingStart="10dp"
                     android:paddingTop="20dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorBlue"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarStart"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="Deprecated" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageButton
                     android:id="@+id/buttonCalendarStart"
@@ -109,7 +108,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/endDate"
@@ -121,20 +120,17 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius">
 
-                <EditText
-                    android:id="@+id/editTextEndDate"
+                <TextView
+                    android:id="@+id/textViewEndDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/colorTransparency"
-                    android:editable="false"
                     android:paddingStart="15dp"
                     android:paddingTop="20dp"
                     android:paddingEnd="15dp"
                     android:paddingBottom="20dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarEnd"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="Deprecated" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageButton
                     android:id="@+id/buttonCalendarEnd"
@@ -182,6 +178,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
+                android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="10dp"
@@ -209,6 +206,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
+                android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="10dp"
@@ -235,7 +233,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/minCost"
@@ -247,6 +245,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
+                android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="10dp"
@@ -262,7 +261,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/maxCost"
@@ -274,6 +273,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
+                android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="10dp"
@@ -293,6 +293,7 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayoutMinCost">
 
         <TextView
+            android:id="@+id/textViewIMG"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -323,12 +324,11 @@
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:tag="@string/tourName"
             android:text="@string/privateTrip" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonCreate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"

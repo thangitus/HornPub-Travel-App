@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.hornpub_travel_app.fragment.MapFragment;
+import com.example.hornpub_travel_app.fragment.MapViewFragment;
 import com.example.hornpub_travel_app.fragment.ListTourFragment;
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.fragment.MyTourFragment;
@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                loadFragment(fragment);
                return true;
             case R.id.navigationCreateTour:
-               fragment = new MapFragment();
+               fragment = new MapViewFragment();
                loadFragment(fragment);
                return true;
             case R.id.navigationNotification:
