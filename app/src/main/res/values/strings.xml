@@ -43,6 +43,10 @@
     <string name="arriveAt">Arrive at</string>
     <string name="leaveAt">Leave at</string>
     <string name="stopPointInfo">Stop point information</string>
+    <string name="select_time">Select time</string>
+    <string name="select_date">Select date</string>
+    <string name="list">Danh sách</string>
+    <string name="send">Gửi</string>
 
 
 

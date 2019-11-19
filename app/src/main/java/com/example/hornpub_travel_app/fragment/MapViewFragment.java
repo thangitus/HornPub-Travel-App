@@ -2,6 +2,7 @@ package com.example.hornpub_travel_app.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -21,8 +22,11 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.SearchView;
 
 import com.example.hornpub_travel_app.R;
+import com.example.hornpub_travel_app.view.CreateTourActivity;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,6 +54,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    private static View view;
    GoogleMap mGoogleMap;
    MapView mapView;
+   SearchView searchView;
    Boolean mLocationPermissionGranted;
    Marker currentMarker = null;
 
@@ -94,7 +99,12 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
-      mapView = view.findViewById(R.id.mapView);
+      mapping();
+      setupView();
+
+   }
+
+   private void setupView() {
       if (mapView != null) {
          mapView.onCreate(null);
          mapView.onResume();
@@ -106,7 +116,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       GoogleMap.OnMapClickListener listener = new GoogleMap.OnMapClickListener() {
          @Override
          public void onMapClick(LatLng latLng) {
-
             getAddress(latLng);
          }
       };
@@ -120,9 +129,23 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       try {
          addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
          Log.wtf("map", "Address: " + addresses.get(0).getAdminArea());
+         displayStopPointDialog();
       } catch (IOException e) {
          e.printStackTrace();
       }
       return res;
+   }
+
+   private void mapping() {
+      searchView = getView().findViewById(R.id.searchView);
+      mapView = view.findViewById(R.id.mapView);
+   }
+
+   public void displayStopPointDialog() {
+      LayoutInflater inflater = getActivity().getLayoutInflater();
+      View view = inflater.inflate(R.layout.stop_point_infomation_dialog, null);
+      Dialog dialog = new Dialog(getContext());
+      dialog.setContentView(view);
+      dialog.show();
    }
 }
