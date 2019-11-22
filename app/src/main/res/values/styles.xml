@@ -13,4 +13,10 @@
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorBlue</item>
     </style>
+    <!--thay đổi màu sắc của button back của thanh toolbar-->
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+
+
 </resources>

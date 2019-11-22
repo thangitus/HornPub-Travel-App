@@ -1,7 +1,9 @@
 package com.example.hornpub_travel_app.view;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,9 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.hornpub_travel_app.R;
 
@@ -27,6 +31,7 @@ public class CreateTourActivity extends AppCompatActivity {
    TextView tvIMG, tvStartDay, tvEndDay;
    RadioGroup radioGroup;
    ImageButton buttonStartDate, buttonEndDate;
+   Toolbar toolbar;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,10 @@ public class CreateTourActivity extends AppCompatActivity {
       setContentView(R.layout.activity_create_tour);
       Intent intent = getIntent();
       mapping();
+      toolbar = findViewById(R.id.toolbar);
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
       buttonStartDate.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -50,13 +59,15 @@ public class CreateTourActivity extends AppCompatActivity {
       buttonCreate.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            openCreateStopPointActivity();
+            if(checkData()){
+            openCreateStopPointActivity();}
          }
       });
 
    }
 
    private void mapping() {
+
       buttonCreate = findViewById(R.id.buttonCreate);
       edtTourName = findViewById(R.id.editTextTourName);
       tvStartDay = findViewById(R.id.textViewStartDate);
@@ -96,5 +107,20 @@ public class CreateTourActivity extends AppCompatActivity {
          }
       }, year, month, day);
       datePickerDialog.show();
+   }
+
+   private boolean checkData(){
+      if(edtTourName.length()<1){
+         edtTourName.setError("Tour name không được rỗng ! ");
+         return false;
+      }
+      if(tvStartDay.length() < 1 ){
+         tvStartDay.setError("Start date không được rỗng ! ");
+         return false;
+      }
+      if(tvEndDay.length()<1){
+         tvEndDay.setError("End date không được rông ! ");
+      }
+      return true;
    }
 }

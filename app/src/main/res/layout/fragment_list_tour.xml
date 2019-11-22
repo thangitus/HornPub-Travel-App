@@ -5,16 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ListTourFragment">
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:background="@color/colorBlue"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:title="@string/appName"
 
-    app:titleTextColor="@color/colorWhite"
-    app:layout_constraintHeight_percent="0.07"/>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarmain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorBlue"
+            app:layout_constraintHeight_percent="0.07"
+            app:title="@string/appName"
+            app:titleTextColor="@color/colorWhite" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
@@ -29,7 +37,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/toolbar" />
+      app:layout_constraintTop_toBottomOf="@id/toolbarmain" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myRecyclerView"
@@ -38,15 +46,17 @@
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/buttonAdd"
         android:layout_width="90dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#0000"
         android:scaleType="fitCenter"
         android:src="@drawable/icons8_add_96"
