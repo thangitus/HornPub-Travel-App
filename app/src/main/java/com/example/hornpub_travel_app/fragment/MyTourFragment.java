@@ -33,7 +33,7 @@ public class MyTourFragment extends Fragment {
 
 
       // Inflate the layout for this fragment
-      return inflater.inflate(R.layout.fragment_my_tour, container, false);
+      return inflater.inflate(R.layout.stop_point_infomation_dialog, container, false);
    }
 
 }

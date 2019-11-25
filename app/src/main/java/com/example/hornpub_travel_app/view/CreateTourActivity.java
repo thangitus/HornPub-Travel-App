@@ -59,7 +59,7 @@ public class CreateTourActivity extends AppCompatActivity {
       buttonCreate.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            if(checkData()){
+            if(!checkData()){
             openCreateStopPointActivity();}
          }
       });

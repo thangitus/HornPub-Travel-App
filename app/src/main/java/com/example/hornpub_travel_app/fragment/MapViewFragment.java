@@ -15,7 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.InflateException;
@@ -142,10 +145,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    }
 
    public void displayStopPointDialog() {
-      LayoutInflater inflater = getActivity().getLayoutInflater();
-      View view = inflater.inflate(R.layout.stop_point_infomation_dialog, null);
-      Dialog dialog = new Dialog(getContext());
-      dialog.setContentView(view);
-      dialog.show();
+      FragmentTransaction ft = getFragmentManager().beginTransaction();
+      Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+      if (prev != null) {
+         ft.remove(prev);
+      }
+      ft.addToBackStack(null);
+      DialogFragment dialogFragment=StopPointDialogFragment.newInstance("fragment");
+      dialogFragment.show(ft,"dialog");
    }
 }
