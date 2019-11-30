@@ -1,53 +1,37 @@
 package com.example.hornpub_travel_app.fragment;
 
-
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.hornpub_travel_app.R;
-import com.example.hornpub_travel_app.view.CreateTourActivity;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +49,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       // Required empty public constructor
    }
 
-
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
@@ -82,12 +65,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       mGoogleMap = googleMap;
       mGoogleMap.setMyLocationEnabled(false);
       mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 14));
-
-      mGoogleMap.setOnMapClickListener(googleMapClickListener());
+      mGoogleMap.setOnMapLongClickListener(googleMapLongClickListener());
       mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
          @Override
          public void onMyLocationChange(Location location) {
-
             if (currentMarker != null) {
                currentMarker.remove();
                currentMarker = null;
@@ -97,7 +78,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       });
 
    }
-
 
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -115,11 +95,12 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       }
    }
 
-   private GoogleMap.OnMapClickListener googleMapClickListener() {
-      GoogleMap.OnMapClickListener listener = new GoogleMap.OnMapClickListener() {
+   private GoogleMap.OnMapLongClickListener googleMapLongClickListener() {
+      GoogleMap.OnMapLongClickListener listener = new GoogleMap.OnMapLongClickListener() {
          @Override
-         public void onMapClick(LatLng latLng) {
+         public void onMapLongClick(LatLng latLng) {
             getAddress(latLng);
+
          }
       };
       return listener;
@@ -131,8 +112,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
       try {
          addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-         Log.wtf("map", "Address: " + addresses.get(0).getAdminArea());
-         displayStopPointDialog();
+//         Log.wtf("map", "Address: " + addresses.get(0).getAdminArea());
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -144,14 +124,5 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       mapView = view.findViewById(R.id.mapView);
    }
 
-   public void displayStopPointDialog() {
-      FragmentTransaction ft = getFragmentManager().beginTransaction();
-      Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-      if (prev != null) {
-         ft.remove(prev);
-      }
-      ft.addToBackStack(null);
-      DialogFragment dialogFragment=StopPointDialogFragment.newInstance("fragment");
-      dialogFragment.show(ft,"dialog");
-   }
+
 }

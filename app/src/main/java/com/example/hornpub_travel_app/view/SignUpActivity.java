@@ -9,12 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hornpub_travel_app.R;
-import com.example.hornpub_travel_app.model.RegisterRequest;
-import com.example.hornpub_travel_app.model.RegisterResponse;
+import com.example.hornpub_travel_app.model.user.RegisterRequest;
+import com.example.hornpub_travel_app.model.user.RegisterResponse;
 import com.example.hornpub_travel_app.network.APIService;
 import com.example.hornpub_travel_app.network.NetworkProvider;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

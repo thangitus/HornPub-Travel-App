@@ -1,0 +1,317 @@
+﻿[
+        {
+            "id": "1",
+            "title": "Hồ Chí Minh",
+            "code": "SG"
+        },
+        {
+            "id": "2",
+            "title": "Hà Nội",
+            "code": "HN"
+        },
+        {
+            "id": "3",
+            "title": "Đà Nẵng",
+            "code": "DDN"
+        },
+        {
+            "id": "4",
+            "title": "Bình Dương",
+            "code": "BD"
+        },
+        {
+            "id": "5",
+            "title": "Đồng Nai",
+            "code": "DNA"
+        },
+        {
+            "id": "6",
+            "title": "Khánh Hòa",
+            "code": "KH"
+        },
+        {
+            "id": "7",
+            "title": "Hải Phòng",
+            "code": "HP"
+        },
+        {
+            "id": "8",
+            "title": "Long An",
+            "code": "LA"
+        },
+        {
+            "id": "9",
+            "title": "Quảng Nam",
+            "code": "QNA"
+        },
+        {
+            "id": "10",
+            "title": "Bà Rịa Vũng Tàu",
+            "code": "VT"
+        },
+        {
+            "id": "11",
+            "title": "Đắk Lắk",
+            "code": "DDL"
+        },
+        {
+            "id": "12",
+            "title": "Cần Thơ",
+            "code": "CT"
+        },
+        {
+            "id": "13",
+            "title": "Bình Thuận  ",
+            "code": "BTH"
+        },
+        {
+            "id": "14",
+            "title": "Lâm Đồng",
+            "code": "LDD"
+        },
+        {
+            "id": "15",
+            "title": "Thừa Thiên Huế",
+            "code": "TTH"
+        },
+        {
+            "id": "16",
+            "title": "Kiên Giang",
+            "code": "KG"
+        },
+        {
+            "id": "17",
+            "title": "Bắc Ninh",
+            "code": "BN"
+        },
+        {
+            "id": "18",
+            "title": "Quảng Ninh",
+            "code": "QNI"
+        },
+        {
+            "id": "19",
+            "title": "Thanh Hóa",
+            "code": "TH"
+        },
+        {
+            "id": "20",
+            "title": "Nghệ An",
+            "code": "NA"
+        },
+        {
+            "id": "21",
+            "title": "Hải Dương",
+            "code": "HD"
+        },
+        {
+            "id": "22",
+            "title": "Gia Lai",
+            "code": "GL"
+        },
+        {
+            "id": "23",
+            "title": "Bình Phước",
+            "code": "BP"
+        },
+        {
+            "id": "24",
+            "title": "Hưng Yên",
+            "code": "HY"
+        },
+        {
+            "id": "25",
+            "title": "Bình Định",
+            "code": "BDD"
+        },
+        {
+            "id": "26",
+            "title": "Tiền Giang",
+            "code": "TG"
+        },
+        {
+            "id": "27",
+            "title": "Thái Bình",
+            "code": "TB"
+        },
+        {
+            "id": "28",
+            "title": "Bắc Giang",
+            "code": "BG"
+        },
+        {
+            "id": "29",
+            "title": "Hòa Bình",
+            "code": "HB"
+        },
+        {
+            "id": "30",
+            "title": "An Giang",
+            "code": "AG"
+        },
+        {
+            "id": "31",
+            "title": "Vĩnh Phúc",
+            "code": "VP"
+        },
+        {
+            "id": "32",
+            "title": "Tây Ninh",
+            "code": "TNI"
+        },
+        {
+            "id": "33",
+            "title": "Thái Nguyên",
+            "code": "TN"
+        },
+        {
+            "id": "34",
+            "title": "Lào Cai",
+            "code": "LCA"
+        },
+        {
+            "id": "35",
+            "title": "Nam Định",
+            "code": "NDD"
+        },
+        {
+            "id": "36",
+            "title": "Quảng Ngãi",
+            "code": "QNG"
+        },
+        {
+            "id": "37",
+            "title": "Bến Tre",
+            "code": "BTR"
+        },
+        {
+            "id": "38",
+            "title": "Đắk Nông",
+            "code": "DNO"
+        },
+        {
+            "id": "39",
+            "title": "Cà Mau",
+            "code": "CM"
+        },
+        {
+            "id": "40",
+            "title": "Vĩnh Long",
+            "code": "VL"
+        },
+        {
+            "id": "41",
+            "title": "Ninh Bình",
+            "code": "NB"
+        },
+        {
+            "id": "42",
+            "title": "Phú Thọ",
+            "code": "PT"
+        },
+        {
+            "id": "43",
+            "title": "Ninh Thuận",
+            "code": "NT"
+        },
+        {
+            "id": "44",
+            "title": "Phú Yên",
+            "code": "PY"
+        },
+        {
+            "id": "45",
+            "title": "Hà Nam",
+            "code": "HNA"
+        },
+        {
+            "id": "46",
+            "title": "Hà Tĩnh",
+            "code": "HT"
+        },
+        {
+            "id": "47",
+            "title": "Đồng Tháp",
+            "code": "DDT"
+        },
+        {
+            "id": "48",
+            "title": "Sóc Trăng",
+            "code": "ST"
+        },
+        {
+            "id": "49",
+            "title": "Kon Tum",
+            "code": "KT"
+        },
+        {
+            "id": "50",
+            "title": "Quảng Bình",
+            "code": "QB"
+        },
+        {
+            "id": "51",
+            "title": "Quảng Trị",
+            "code": "QT"
+        },
+        {
+            "id": "52",
+            "title": "Trà Vinh",
+            "code": "TV"
+        },
+        {
+            "id": "53",
+            "title": "Hậu Giang",
+            "code": "HGI"
+        },
+        {
+            "id": "54",
+            "title": "Sơn La",
+            "code": "SL"
+        },
+        {
+            "id": "55",
+            "title": "Bạc Liêu",
+            "code": "BL"
+        },
+        {
+            "id": "56",
+            "title": "Yên Bái",
+            "code": "YB"
+        },
+        {
+            "id": "57",
+            "title": "Tuyên Quang",
+            "code": "TQ"
+        },
+        {
+            "id": "58",
+            "title": "Điện Biên",
+            "code": "DDB"
+        },
+        {
+            "id": "59",
+            "title": "Lai Châu",
+            "code": "LCH"
+        },
+        {
+            "id": "60",
+            "title": "Lạng Sơn",
+            "code": "LS"
+        },
+        {
+            "id": "61",
+            "title": "Hà Giang",
+            "code": "HG"
+        },
+        {
+            "id": "62",
+            "title": "Bắc Kạn",
+            "code": "BK"
+        },
+        {
+            "id": "63",
+            "title": "Cao Bằng",
+            "code": "CB"
+        }
+]

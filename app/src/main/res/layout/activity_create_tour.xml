@@ -8,28 +8,26 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/colorBlue"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:title="@string/createTour"
-        android:gravity="center"
-        app:titleTextColor="@color/colorWhite"
+        android:background="@color/colorBlue"
+        android:theme="@style/ToolbarColoredBackArrow"
         app:layout_constraintHeight_percent="0.07"
-        android:theme="@style/ToolbarColoredBackArrow"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/createTour"
+        app:titleTextColor="@color/colorWhite" />
 
 
     <LinearLayout
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:id="@+id/linearLayoutTourName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintHeight_percent="0.12">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,18 +45,20 @@
             android:gravity="center_vertical"
             android:inputType="textCapWords"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textCursorDrawable="@null"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
     <LinearLayout
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:id="@+id/linearLayoutDate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:weightSum="2"
         app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutTourName">
@@ -87,15 +87,14 @@
                     android:id="@+id/textViewStartDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingStart="15dp"
+                    android:gravity="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarStart"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageButton
                     android:id="@+id/buttonCalendarStart"
-                    android:layout_width="58dp"
+                    android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/colorTransparency"
                     android:scaleType="fitCenter"
@@ -131,8 +130,7 @@
                     android:id="@+id/textViewEndDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingStart="15dp"
+                    android:gravity="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/buttonCalendarEnd"
@@ -141,7 +139,7 @@
 
                 <ImageButton
                     android:id="@+id/buttonCalendarEnd"
-                    android:layout_width="58dp"
+                    android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/colorTransparency"
                     android:scaleType="fitCenter"
@@ -149,6 +147,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintWidth_percent="0.2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,13 +155,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:id="@+id/linearLayoutAdults"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:weightSum="2"
         app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutDate">
@@ -187,10 +186,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
-                android:inputType="number"
                 android:gravity="center_vertical"
+                android:inputType="number"
                 android:paddingStart="15dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:paddingEnd="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
 
         <LinearLayout
@@ -214,22 +215,21 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="20dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:id="@+id/linearLayoutMinCost"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:weightSum="2"
         app:layout_constraintHeight_percent="0.12"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutAdults">
@@ -255,11 +255,10 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="20dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
 
         <LinearLayout
@@ -282,20 +281,22 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_radius"
-                android:inputType="number"
                 android:gravity="center_vertical"
+                android:inputType="number"
                 android:paddingStart="15dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:paddingEnd="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:id="@+id/layoutTourImg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/border_radius"
         android:orientation="horizontal"
         app:layout_constraintHeight_percent="0.08"
@@ -312,6 +313,7 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/buttonAddImg"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
@@ -321,37 +323,34 @@
             android:src="@drawable/ic_icons8_plus" />
     </RelativeLayout>
 
-    <RadioGroup
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:id="@+id/layoutRadio"
+
+    <RadioButton
+        android:id="@+id/radioButtonPrivate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintTop_toBottomOf="@id/layoutTourImg">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/privateTrip" />
-    </RadioGroup>
-
-    <Button
+        android:layout_marginEnd="40dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:text="@string/privateTrip"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintTop_toBottomOf="@id/layoutTourImg" />
+
+    <Button
         android:id="@+id/buttonCreate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="40dp"
-        android:background="@drawable/border_radius_solid"
+        android:background="@drawable/border_gradient"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/create"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutRadio" />
+        app:layout_constraintTop_toBottomOf="@id/radioButtonPrivate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

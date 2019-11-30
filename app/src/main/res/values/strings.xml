@@ -48,10 +48,7 @@
     <string name="select_date">Select date</string>
     <string name="list">Danh sách</string>
     <string name="send">Gửi</string>
-
-
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_stop_point">Thêm</string>
 
 </resources>

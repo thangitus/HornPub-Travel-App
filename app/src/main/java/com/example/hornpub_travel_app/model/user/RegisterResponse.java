@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.model;
+package com.example.hornpub_travel_app.model.user;
 
 import com.google.gson.annotations.SerializedName;
 
