@@ -14,9 +14,7 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hornpub_travel_app.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,6 +41,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    MapView mapView;
    SearchView searchView;
    Boolean mLocationPermissionGranted;
+   List<Marker> markerList;
    Marker currentMarker = null;
 
    public MapViewFragment() {
@@ -58,7 +57,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
    @Override
    public void onMapReady(GoogleMap googleMap) {
-
       MapsInitializer.initialize(getContext());
       LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
       @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -73,7 +71,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
                currentMarker.remove();
                currentMarker = null;
             } else
-               currentMarker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
+               currentMarker = mGoogleMap.addMarker(new MarkerOptions()
+                       .position(new LatLng(location.getLatitude(), location.getLongitude())));
          }
       });
 
@@ -84,7 +83,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       super.onViewCreated(view, savedInstanceState);
       mapping();
       setupView();
-
+      markerList = new ArrayList<>();
    }
 
    private void setupView() {
@@ -123,6 +122,5 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
       searchView = getView().findViewById(R.id.searchView);
       mapView = view.findViewById(R.id.mapView);
    }
-
 
 }

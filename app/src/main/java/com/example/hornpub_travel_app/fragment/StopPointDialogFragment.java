@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,6 @@ public class StopPointDialogFragment extends DialogFragment {
       imageButtonClose.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            Log.d(TAG, "onCLick");
             getDialog().dismiss();
          }
       });
@@ -155,9 +153,12 @@ public class StopPointDialogFragment extends DialogFragment {
       ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, stringList);
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinnerProvince.setAdapter(adapter);
-      for (int i = 0; i < stringList.size(); i++)
-         if (stringList.get(i).equals(province))
-            spinnerProvince.setSelection(i);
+      if (province != null) {
+         province = province.replace("Province ", "");
+         for (int i = 0; i < stringList.size(); i++)
+            if (stringList.get(i).equals(province))
+               spinnerProvince.setSelection(i);
+      }
    }
 
    private List<String> readeJSON(String name) throws JSONException {

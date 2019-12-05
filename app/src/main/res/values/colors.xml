@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorBlueLight">#339EFF</color>
+    <color name="colorBlueLightTransparency">#48339EFF</color>
     <color name="colorBlue">#0066C4</color>
+    <color name="colorBlueDarker">#0058AD</color>
     <color name="colorWhite">#FFFF</color>
     <color name="colorGray">#CCCCCC</color>
     <color name="colorGrayDarker">#949494</color>

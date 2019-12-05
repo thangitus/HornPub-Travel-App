@@ -37,6 +37,7 @@
     <string name="create">Create</string>
     <string name="createTour">Create tour</string>
     <string name="api_key">AIzaSyBORpyUkCKvcY11reBSXpEbe1NdETBE-aQ</string>
+    <string name="api_direct">AIzaSyBTPGt6wHibzdpuwi31X9qNwHosuyu0GEg</string>
     <string name="stopPointName"> Stop point name</string>
     <string name="serviceType">Service type</string>
     <string name="address">Address</string>

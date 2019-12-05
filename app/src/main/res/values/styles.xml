@@ -7,6 +7,8 @@
         <item name="colorAccent">@color/colorBlue</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/colorBlueDarker</item>
+        <item name="android:navigationBarColor">@color/colorBlueDarker</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
