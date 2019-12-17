@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.view;
+package com.example.hornpub_travel_app.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.application.mApplication;
 import com.example.hornpub_travel_app.fragment.StopPointDialogFragment;
+import com.example.hornpub_travel_app.model.create_tour.AddStopPointRequest;
 import com.example.hornpub_travel_app.model.create_tour.CreateTourRequest;
 import com.example.hornpub_travel_app.model.create_tour.StopPoint;
 import com.example.hornpub_travel_app.network.APIService;
@@ -69,12 +70,11 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
    StopPoint stopPoint;
    ImageButton buttonMyLocation;
    CreateTourRequest createTourRequest;
-   List<StopPoint> stopPointList;
    mApplication mApp;
-   String tourId;
    Circle firstCircle, secondCircle;
    List<Marker> markerList;
    PolylineOptions polylineOptions;
+   AddStopPointRequest addStopPointRequest;
 
    @SuppressLint("HandlerLeak")
    private Handler handler = new Handler() {
@@ -90,18 +90,18 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+      addStopPointRequest = new AddStopPointRequest();
       setContentView(R.layout.activity_create_stop_point);
       mapping();
       setupView();
       mApp = (mApplication) getApplicationContext();
-      stopPointList = new ArrayList<>();
       Intent intent = getIntent();
-//      createTourRequest = intent.getParcelableExtra("createTourRequest");
       createTourRequest = new CreateTourRequest();
+      createTourRequest = intent.getParcelableExtra("createTourRequest");
       buttonMyLocation.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            moveCameraToCurrentLocation(18);
+            moveCameraToCurrentLocation(15);
          }
       });
    }
@@ -111,8 +111,8 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       buttonMyLocation = findViewById(R.id.buttonMyLocation);
    }
 
-   public void displayStopPointDialog(StopPoint stopPoint, String province) {
-      DialogFragment dialogFragment = StopPointDialogFragment.newInstance(stopPoint, province);
+   public void displayStopPointDialog(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
+      DialogFragment dialogFragment = StopPointDialogFragment.newInstance(addStopPointRequest, stopPoint, province);
       dialogFragment.show(getSupportFragmentManager(), "dialog");
    }
 
@@ -125,8 +125,7 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       mGoogleMap.setMyLocationEnabled(false);
       mGoogleMap.setOnMapClickListener(googleMapClickListener());
       LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-      @SuppressLint("MissingPermission")
-      Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+      @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
       LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
       setCircle(latLng);
       mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
@@ -171,7 +170,7 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
             }
             stopPoint.setLat((float) latLng.latitude);
             stopPoint.setLongitude((float) latLng.longitude);
-            displayStopPointDialog(stopPoint, address.getAdminArea());
+            displayStopPointDialog(addStopPointRequest, stopPoint, address.getAdminArea());
          }
       };
       return listener;
@@ -209,30 +208,25 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
 
    @Override
    public void onDismiss(DialogInterface dialogInterface) {
-      if (stopPoint.getName() == null) {
-         return;
-      }
       String title = "";
-      stopPointList.add(stopPoint);
-      stopPoint.setTourId(tourId);
-      if (stopPointList.size() == 1) title = "Điểm bắt đầu";
-      else if (stopPointList.size() == 2) title = "Điểm kết thúc";
+      if (addStopPointRequest.getStopPoints().size() == 1) title = "Điểm bắt đầu";
+      else if (addStopPointRequest.getStopPoints().size() == 2) title = "Điểm kết thúc";
 
       addMarker(new LatLng(stopPoint.getLat(), stopPoint.getLongitude()), title);
-      if (stopPointList.size() == 2) {
+      if (addStopPointRequest.getStopPoints().size() == 2) {
          StopPoint sourceStopPoint, desStopPoint;
-         sourceStopPoint = stopPointList.get(0);
-         desStopPoint = stopPointList.get(1);
+         sourceStopPoint = addStopPointRequest.getStopPoints().get(0);
+         desStopPoint = addStopPointRequest.getStopPoints().get(1);
          createTourRequest.setSourceLat(sourceStopPoint.getLat());
          createTourRequest.setSourceLong(sourceStopPoint.getLongitude());
          createTourRequest.setDesLat(desStopPoint.getLat());
          createTourRequest.setDesLong(desStopPoint.getLongitude());
-         createTourRequest.setAvatar(mApp.getAvatarBase64());
+//         createTourRequest.setAvatar(mApp.getAvatarBase64());
          sendCreateTourRequest(createTourRequest);
       }
 
-      if (stopPointList.size() >= 2) {
-         final String request = makeURL(stopPointList);
+      if (addStopPointRequest.getStopPoints().size() >= 2) {
+         final String request = makeURL(addStopPointRequest.getStopPoints());
          new Thread(new Runnable() {
             @Override
             public void run() {
@@ -280,15 +274,46 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       call.enqueue(new Callback<ResponseBody>() {
          @Override
          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            Log.d(TAG, "On Response");
+            if (response.code() == 200) {
+               try {
+                  String stringResponse = response.body().string();
+                  JSONObject jResponse = new JSONObject(stringResponse);
+                  addStopPointRequest.setTourId(jResponse.getString("id"));
+               } catch (IOException | JSONException e) {
+                  e.printStackTrace();
+               }
+            }
+            Log.i(TAG, "On Response Create Tour");
          }
          @Override
          public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            Log.i(TAG, "On Failure Create Tour");
          }
       });
    }
 
+   private void sendAddStopPoint(AddStopPointRequest addStopPointRequest) {
+      APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
+      Call<ResponseBody> call = apiService.addStopPoint(mApp.getToken(), addStopPointRequest);
+      call.enqueue(new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.code() == 200) {
+               Log.i(TAG, "On response add stop point");
+               try {
+                  Log.i(TAG, response.body().string());
+               } catch (IOException e) {
+                  e.printStackTrace();
+               }
+            }
+
+         }
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.i(TAG, "On failure add stop point");
+         }
+      });
+   }
    private String makeURL(List<StopPoint> stopPointList) {
       String url = "https://maps.googleapis.com/maps/api/directions/json";
       String srcAdd = "?origin=" + stopPointList.get(0).getLat() + "," + stopPointList.get(0).getLongitude();
@@ -363,5 +388,13 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       }
 
       return poly;
+   }
+
+   @Override
+   public void onBackPressed() {
+      if (addStopPointRequest.getStopPoints().size() > 2)
+         sendAddStopPoint(addStopPointRequest);
+      super.onBackPressed();
+      Log.d(TAG, "back");
    }
 }

@@ -2,6 +2,7 @@ package com.example.hornpub_travel_app.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -24,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.hornpub_travel_app.R;
+import com.example.hornpub_travel_app.model.create_tour.AddStopPointRequest;
 import com.example.hornpub_travel_app.model.create_tour.StopPoint;
 
 import org.json.JSONArray;
@@ -40,24 +42,26 @@ import java.util.Locale;
 
 public class StopPointDialogFragment extends DialogFragment {
    private static final String TAG = "StopPointDialogFragment";
+   int change = -1;
    private EditText editTextStopPointName, editTextAddress, editTextMinCost, editTextMaxCost;
    private Spinner spinnerServiceType, spinnerProvince;
    private TextView textViewTimeArrive, textViewTimeLeave, textViewDateArrive, textViewDateLeave;
    private ImageButton imageButtonClose;
+   private AddStopPointRequest addStopPointRequest;
    private StopPoint stopPoint;
    private String province;
    private Button buttonList, buttonAdd;
-
    public StopPointDialogFragment() {
 
    }
-   public static StopPointDialogFragment newInstance(StopPoint stopPoint, String province) {
+   public static StopPointDialogFragment newInstance(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
       StopPointDialogFragment fragment = new StopPointDialogFragment();
-      fragment.setData(stopPoint, province);
+      fragment.setData(addStopPointRequest, stopPoint, province);
       return fragment;
    }
 
-   public void setData(StopPoint stopPoint, String province) {
+   public void setData(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
+      this.addStopPointRequest = addStopPointRequest;
       this.stopPoint = stopPoint;
       this.province = province;
    }
@@ -69,7 +73,7 @@ public class StopPointDialogFragment extends DialogFragment {
    @Nullable
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.stop_point_infomation_dialog, container, false);
+      return inflater.inflate(R.layout.fragment_dialog_add_stop_point, container, false);
    }
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -117,6 +121,12 @@ public class StopPointDialogFragment extends DialogFragment {
          @Override
          public void onClick(View view) {
             if (getData()) getDialog().dismiss();
+         }
+      });
+      buttonList.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+            showListStopPoint();
          }
       });
    }
@@ -248,9 +258,35 @@ public class StopPointDialogFragment extends DialogFragment {
       return 0;
    }
 
+   private void showListStopPoint() {
+      if (addStopPointRequest.getStopPoints().size() < 1) return;
+      final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+      builder.setTitle("List stop point");
+      List<String> nameStopPoints = new ArrayList<>();
+      for (int i = 0; i < addStopPointRequest.getStopPoints().size(); i++) {
+         nameStopPoints.add(addStopPointRequest.getStopPoints().get(i).getName());
+      }
+      CharSequence[] cs = nameStopPoints.toArray(new CharSequence[nameStopPoints.size()]);
+      builder.setItems(cs, new DialogInterface.OnClickListener() {
+         @Override
+         public void onClick(DialogInterface dialogInterface, int i) {
+            stopPoint = addStopPointRequest.getStopPoints().get(i);
+            editTextStopPointName.setText(stopPoint.getName());
+            editTextAddress.setText(stopPoint.getAddress());
+            change = i;
+         }
+      });
+      builder.show();
+   }
    @Override
    public void onDismiss(@NonNull DialogInterface dialog) {
       super.onDismiss(dialog);
+      if (stopPoint.getName() == null) {
+         return;
+      }
+      if (change != -1)
+         addStopPointRequest.getStopPoints().remove(change);
+      addStopPointRequest.getStopPoints().add(stopPoint);
       final Activity activity = getActivity();
       if (activity instanceof DialogInterface.OnDismissListener) {
          ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);

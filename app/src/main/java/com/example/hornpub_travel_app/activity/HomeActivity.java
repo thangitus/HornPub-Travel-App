@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.view;
+package com.example.hornpub_travel_app.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
                loadFragment(fragment);
                return true;
             case R.id.navigationMyTour:
-               fragment = new MyTourFragment();
+               fragment = MyTourFragment.getInstance();
                loadFragment(fragment);
                return true;
             case R.id.navigationCreateTour:

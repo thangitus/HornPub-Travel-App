@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.view;
+package com.example.hornpub_travel_app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.hornpub_travel_app.R;
 

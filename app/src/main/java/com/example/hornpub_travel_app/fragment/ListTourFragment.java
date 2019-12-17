@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.adapter.TravelListAdapter;
+import com.example.hornpub_travel_app.application.mApplication;
 import com.example.hornpub_travel_app.model.ListTourRequest;
 import com.example.hornpub_travel_app.model.ListTourResponse;
 import com.example.hornpub_travel_app.model.Tour;
 import com.example.hornpub_travel_app.network.APIService;
 import com.example.hornpub_travel_app.network.NetworkProvider;
-import com.example.hornpub_travel_app.view.CreateTourActivity;
+import com.example.hornpub_travel_app.activity.CreateTourActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class ListTourFragment extends Fragment {
    String token;
    SearchView searchView;
@@ -44,9 +42,8 @@ public class ListTourFragment extends Fragment {
    List<Tour> tourList;
    APIService apiService;
    ListTourRequest listTourRequest;
-   private RecyclerView recyclerView;
    ImageButton buttonAdd;
-
+   private RecyclerView recyclerView;
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
@@ -56,7 +53,9 @@ public class ListTourFragment extends Fragment {
 
    private void sendListTourRequest(final ListTourRequest listTourRequest) {
       apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
-
+      mApplication mApp;
+      mApp = (mApplication) getActivity().getApplicationContext();
+      token = mApp.getToken();
       Map<String, String> params = new HashMap<String, String>();
       params.put("rowPerPage", "8");
       params.put("pageNum", "1");
@@ -83,7 +82,7 @@ public class ListTourFragment extends Fragment {
 
    private void createRecyclerView() {
       TravelListAdapter travelListAdapter;
-      travelListAdapter = new TravelListAdapter(getContext(), tourList);
+      travelListAdapter = new TravelListAdapter(getContext(), tourList,null);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
       recyclerView.setLayoutManager(mLayoutManager);
       recyclerView.setItemAnimator(new DefaultItemAnimator());

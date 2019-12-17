@@ -1,6 +1,9 @@
 package com.example.hornpub_travel_app.model;
 
+import com.example.hornpub_travel_app.model.create_tour.StopPoint;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Tour {
    @SerializedName("id")
@@ -24,7 +27,6 @@ public class Tour {
    @SerializedName("endDate")
    String endDate;
 
-
    @SerializedName("adults")
    int adults;
 
@@ -36,6 +38,9 @@ public class Tour {
 
    @SerializedName("avatar")
    String avatar;
+
+   @SerializedName("stopPoints")
+   List<StopPoint> stopPoints;
 
    public Tour(int id, int status, String name, String minCost, String maxCost, String startDate, String endDate, int adults, int childs, String isPrivate, String avatar) {
       this.id = id;
@@ -50,7 +55,12 @@ public class Tour {
       this.isPrivate = isPrivate;
       this.avatar = avatar;
    }
-
+   public List<StopPoint> getStopPoints() {
+      return stopPoints;
+   }
+   public void setStopPoints(List<StopPoint> stopPoints) {
+      this.stopPoints = stopPoints;
+   }
    public int getId() {
       return id;
    }
@@ -139,17 +149,4 @@ public class Tour {
       this.avatar = avatar;
    }
 
-   public Tour(Tour tour) {
-      this.id = tour.getId();
-      this.status = tour.getStatus();
-      this.name = tour.getName();
-      this.minCost = tour.getMinCost();
-      this.maxCost = tour.getMaxCost();
-      this.startDate = tour.getStartDate();
-      this.endDate = tour.getEndDate();
-      this.adults = tour.getAdults();
-      this.childs = tour.getChilds();
-      this.isPrivate = tour.getIsPrivate();
-      this.avatar = tour.getAvatar();
-   }
 }

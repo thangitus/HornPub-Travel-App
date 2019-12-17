@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.view;
+package com.example.hornpub_travel_app.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

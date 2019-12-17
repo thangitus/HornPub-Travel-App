@@ -51,5 +51,10 @@
     <string name="send">Gửi</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_stop_point">Thêm</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="my_tour">My tour</string>
+    <string name="tour_detail">Tour detail</string>
+    <string name="stop_point">Stop point</string>
 
 </resources>

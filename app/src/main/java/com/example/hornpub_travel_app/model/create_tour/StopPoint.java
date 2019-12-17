@@ -3,8 +3,6 @@ package com.example.hornpub_travel_app.model.create_tour;
 import com.google.gson.annotations.SerializedName;
 
 public class StopPoint {
-   @SerializedName("tourId")
-   String tourId;
 
    @SerializedName("id")
    int id;
@@ -79,12 +77,6 @@ public class StopPoint {
    }
    public void setDateLeave(String dateLeave) {
       this.dateLeave = dateLeave;
-   }
-   public String getTourId() {
-      return tourId;
-   }
-   public void setTourId(String tourId) {
-      this.tourId = tourId;
    }
    public int getId() {
       return id;

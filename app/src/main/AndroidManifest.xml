@@ -15,20 +15,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.CreateStopPointActivity">
+        <activity
+            android:name=".activity.CreateStopPointActivity"
+            android:parentActivityName=".activity.CreateTourActivity">
+
+        </activity>
+        <activity
+            android:name=".activity.CreateTourActivity"
+            android:noHistory="true"
+            android:parentActivityName=".activity.HomeActivity">
+
+        </activity>
+        <activity android:name=".activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.CreateTourActivity"
-            android:parentActivityName=".view.HomeActivity">
-
-        </activity>
-        <activity android:name=".view.HomeActivity">
-
         </activity>
 
         <meta-data
@@ -51,12 +54,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ForgotPassWordActivity" />
+        <activity android:name=".activity.ForgotPassWordActivity" />
         <activity
-            android:name=".view.SignUpActivity"
-            android:parentActivityName=".view.LoginActivity"
+            android:name=".activity.SignUpActivity"
+            android:parentActivityName=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".activity.LoginActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

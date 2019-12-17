@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.view;
+package com.example.hornpub_travel_app.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -26,8 +26,6 @@ import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.application.mApplication;
 import com.example.hornpub_travel_app.model.create_tour.CreateTourRequest;
 import com.example.hornpub_travel_app.model.create_tour.CreateTourResponse;
-import com.example.hornpub_travel_app.network.APIService;
-import com.example.hornpub_travel_app.network.NetworkProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,10 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CreateTourActivity extends AppCompatActivity {
    private static final int REQUEST_CODE = 1;
@@ -119,7 +113,8 @@ public class CreateTourActivity extends AppCompatActivity {
    private void openCreateStopPointActivity() {
       Intent intent = new Intent(this, CreateStopPointActivity.class);
       intent.putExtra("createTourRequest", createTourRequest);
-      startActivityForResult(intent, REQUEST_CODE);
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(intent);
    }
 
    private void datePicker(final TextView textView) {

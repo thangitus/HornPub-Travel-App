@@ -9,30 +9,42 @@ public class CreateTourRequest implements Parcelable {
 
    @SerializedName("name")
    String name;
+
    @SerializedName("startDate")
    long startDate;
+
    @SerializedName("endDate")
    long endDate;
+
    @SerializedName("sourceLat")
    float sourceLat;
+
    @SerializedName("sourceLong")
    float sourceLong;
+
    @SerializedName("desLat")
    float desLat;
+
    @SerializedName("desLong")
    float desLong;
+
    @SerializedName("isPrivate")
    Boolean isPrivate;
+
    @SerializedName("adultsoptional")
    int adults;
+
    @SerializedName("childs")
    int childs;
+
    @SerializedName("minCost")
    int minCost;
+
    @SerializedName("maxCost")
    int maxCost;
-   @SerializedName("avatar")
-   String avatar;
+
+//   @SerializedName("avatar")
+//   String avatar;
 
    public CreateTourRequest() {
       this.name = "";
@@ -46,23 +58,9 @@ public class CreateTourRequest implements Parcelable {
       this.adults = 0;
       this.childs = 0;
       this.maxCost = 0;
-      this.avatar = "";
+//      this.avatar = "";
    }
-   public CreateTourRequest(String name, long startDate, long endDate, float sourceLat, float sourceLong, float desLat, float desLong, Boolean isPrivate, int adults, int childs, int minCost, int maxCost, String avatar) {
-      this.name = name;
-      this.startDate = startDate;
-      this.endDate = endDate;
-      this.sourceLat = sourceLat;
-      this.sourceLong = sourceLong;
-      this.desLat = desLat;
-      this.desLong = desLong;
-      this.isPrivate = isPrivate;
-      this.adults = adults;
-      this.childs = childs;
-      this.minCost = minCost;
-      this.maxCost = maxCost;
-      this.avatar = avatar;
-   }
+
    protected CreateTourRequest(Parcel in) {
       name = in.readString();
       startDate = in.readLong();
@@ -77,7 +75,7 @@ public class CreateTourRequest implements Parcelable {
       childs = in.readInt();
       minCost = in.readInt();
       maxCost = in.readInt();
-      avatar = in.readString();
+//      avatar = in.readString();
    }
    public static final Creator<CreateTourRequest> CREATOR = new Creator<CreateTourRequest>() {
       @Override
@@ -162,12 +160,12 @@ public class CreateTourRequest implements Parcelable {
    public void setMaxCost(int maxCost) {
       this.maxCost = maxCost;
    }
-   public String getAvatar() {
-      return avatar;
-   }
-   public void setAvatar(String avatar) {
-      this.avatar = avatar;
-   }
+//   public String getAvatar() {
+//      return avatar;
+//   }
+//   public void setAvatar(String avatar) {
+//      this.avatar = avatar;
+//   }
    @Override
    public int describeContents() {
       return 0;
@@ -186,6 +184,6 @@ public class CreateTourRequest implements Parcelable {
       parcel.writeInt(childs);
       parcel.writeInt(minCost);
       parcel.writeInt(maxCost);
-      parcel.writeString(avatar);
+//      parcel.writeString(avatar);
    }
 }
