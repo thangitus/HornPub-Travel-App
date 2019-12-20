@@ -56,5 +56,6 @@
     <string name="my_tour">My tour</string>
     <string name="tour_detail">Tour detail</string>
     <string name="stop_point">Stop point</string>
+    <string name="remove">Remove</string>
 
 </resources>

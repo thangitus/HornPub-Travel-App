@@ -4,6 +4,7 @@ import com.example.hornpub_travel_app.model.ListTourResponse;
 import com.example.hornpub_travel_app.model.Tour;
 import com.example.hornpub_travel_app.model.create_tour.AddStopPointRequest;
 import com.example.hornpub_travel_app.model.create_tour.CreateTourRequest;
+import com.example.hornpub_travel_app.model.create_tour.StopPoint;
 import com.example.hornpub_travel_app.model.user.LoginRequest;
 import com.example.hornpub_travel_app.model.user.LoginResponse;
 import com.example.hornpub_travel_app.model.user.RegisterRequest;
@@ -41,8 +42,15 @@ public interface APIService {
    Call<ListTourResponse> getHistory(@Header("Authorization") String token, @QueryMap Map<String, Number> params);
 
    @GET("/tour/info")
-   Call<ResponseBody> getTourInfo(@Header("Authorization") String token, @Query("tourId") String tourId);
+   Call<Tour> getTourInfo(@Header("Authorization") String token, @Query("tourId") int tourId);
 
    @POST("/tour/update-tour")
    Call<ResponseBody> updateTour(@Header("Authorization") String token, @Body Tour tour);
+
+   @GET("/tour/remove-stop-point")
+   Call<ResponseBody> removeStopPoint(@Header("Authorization") String token, @Query("stopPointId") int stopPointId);
+
+   @POST("/tour/update-stop-point")
+   Call<ResponseBody> updateStopPoint(@Header("Authorization") String token, @Body int id, @Body StopPoint stopPoint);
+
 }

@@ -24,6 +24,7 @@
         app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
         app:itemTextColor="@color/colorTransparency"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu" />

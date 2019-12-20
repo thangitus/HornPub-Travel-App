@@ -22,7 +22,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.application.mApplication;
-import com.example.hornpub_travel_app.fragment.StopPointDialogFragment;
+import com.example.hornpub_travel_app.fragment.StopPointDialog.AddStopPointDialogFragment;
+import com.example.hornpub_travel_app.fragment.StopPointDialog.StopPointDialogFragment;
 import com.example.hornpub_travel_app.model.create_tour.AddStopPointRequest;
 import com.example.hornpub_travel_app.model.create_tour.CreateTourRequest;
 import com.example.hornpub_travel_app.model.create_tour.StopPoint;
@@ -112,7 +113,7 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
    }
 
    public void displayStopPointDialog(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
-      DialogFragment dialogFragment = StopPointDialogFragment.newInstance(addStopPointRequest, stopPoint, province);
+      DialogFragment dialogFragment = AddStopPointDialogFragment.newInstance(addStopPointRequest, stopPoint, province);
       dialogFragment.show(getSupportFragmentManager(), "dialog");
    }
 

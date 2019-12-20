@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,23 +23,31 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hornpub_travel_app.R;
 import com.example.hornpub_travel_app.application.mApplication;
+import com.example.hornpub_travel_app.fragment.StopPointDialog.EditStopPointDialogFragment;
 import com.example.hornpub_travel_app.model.Tour;
 import com.example.hornpub_travel_app.network.APIService;
 import com.example.hornpub_travel_app.network.NetworkProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TourDetailDialogFragment extends DialogFragment {
+public class TourDetailDialogFragment extends Fragment {
    private static final String TAG = "TourDetailDialogFragment";
-   RadioButton radioButton;
+   private RadioButton radioButton;
    private Tour tour;
    private EditText editTextTourName, editTextAdult, editTextChildren, editTextMinCost, editTextMaxCost;
    private TextView textViewStartDate, textViewEndDate, textViewAvatar;
-   private ImageButton imageButtonClose;
    private Button buttonDelete, buttonUpdate;
+   private Spinner spinnerStopPoints;
+   private int userIsInteractingSpinner = 0;
+
+   public TourDetailDialogFragment(){}
+
    public static TourDetailDialogFragment newInstance(Tour tour) {
       TourDetailDialogFragment fragment = new TourDetailDialogFragment();
       fragment.setData(tour);
@@ -46,20 +57,12 @@ public class TourDetailDialogFragment extends DialogFragment {
       this.tour = tour;
    }
 
-   @Override
-   public void onStart() {
-      super.onStart();
-      getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-   }
+
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
       return inflater.inflate(R.layout.fragment_dilog_tour_detail, container, false);
    }
-   @Override
-   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-      super.onActivityCreated(savedInstanceState);
-      getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-   }
+
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
@@ -68,17 +71,10 @@ public class TourDetailDialogFragment extends DialogFragment {
       setClickListener();
    }
    private void setClickListener() {
-      imageButtonClose.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-            getDialog().dismiss();
-         }
-      });
       buttonDelete.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
             tour.setName(null);
-            getDialog().dismiss();
          }
       });
       buttonUpdate.setOnClickListener(new View.OnClickListener() {
@@ -92,19 +88,8 @@ public class TourDetailDialogFragment extends DialogFragment {
             tour.setMinCost(editTextMinCost.getText().toString());
             tour.setMaxCost(editTextMaxCost.getText().toString());
             updateTour();
-            getDialog().dismiss();
          }
       });
-   }
-   private void setupView() {
-      editTextTourName.setText(tour.getName());
-      editTextAdult.setText(String.valueOf(tour.getAdults()));
-      editTextChildren.setText(String.valueOf(tour.getChilds()));
-      editTextMinCost.setText(tour.getMinCost());
-      editTextMaxCost.setText(tour.getMaxCost());
-      textViewStartDate.setText(tour.getStartDate());
-      textViewEndDate.setText(tour.getEndDate());
-
    }
    private void mapping() {
       View view = getView();
@@ -117,17 +102,46 @@ public class TourDetailDialogFragment extends DialogFragment {
       textViewEndDate = view.findViewById(R.id.textViewEndDateDialog);
       textViewAvatar = view.findViewById(R.id.textViewIMG);
       radioButton = view.findViewById(R.id.radioButtonPrivateDialog);
-      imageButtonClose = view.findViewById(R.id.buttonCloseDialog);
       buttonDelete = view.findViewById(R.id.buttonDelete);
       buttonUpdate = view.findViewById(R.id.buttonUpdate);
+      spinnerStopPoints = view.findViewById(R.id.spinnerStopPoint);
    }
 
-   @Override
-   public void onDismiss(@NonNull DialogInterface dialog) {
-      super.onDismiss(dialog);
-      Fragment parentFragment = MyTourFragment.getInstance();
-      ((DialogInterface.OnDismissListener) parentFragment).onDismiss(dialog);
+   private void setupView() {
+      editTextTourName.setText(tour.getName());
+      editTextAdult.setText(String.valueOf(tour.getAdults()));
+      editTextChildren.setText(String.valueOf(tour.getChilds()));
+      editTextMinCost.setText(tour.getMinCost());
+      editTextMaxCost.setText(tour.getMaxCost());
+      textViewStartDate.setText(tour.getStartDate());
+      textViewEndDate.setText(tour.getEndDate());
+      List<String> stringList = new ArrayList<>();
+      stringList.add("Chọn stop point");
+      for (int i = 0; i < tour.getStopPoints().size(); i++)
+         stringList.add(tour.getStopPoints().get(i).getName());
+      ArrayAdapter<String> adapter = new ArrayAdapter<>(MyTourFragment.getInstance().getActivity(), android.R.layout.simple_spinner_item, stringList);
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinnerStopPoints.setAdapter(adapter);
+      spinnerStopPoints.setSelection(0);
+      spinnerStopPoints.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+         @Override
+         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (i == 0) return;
+            if (userIsInteractingSpinner > 0) {
+               int index = i - 1;
+               DialogFragment dialogFragment = EditStopPointDialogFragment.newInstance(tour, index);
+               dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
+            }
+            userIsInteractingSpinner++;
+         }
+         @Override
+         public void onNothingSelected(AdapterView<?> adapterView) {
+
+         }
+      });
    }
+
+
    private void updateTour() {
       APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       mApplication mApp;
@@ -137,12 +151,12 @@ public class TourDetailDialogFragment extends DialogFragment {
       call.enqueue(new Callback<ResponseBody>() {
          @Override
          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-         if(response.code()==200)
-            Toast.makeText(MyTourFragment.getInstance().getActivity(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+            if (response.code() == 200)
+               Toast.makeText(MyTourFragment.getInstance().getActivity(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
          }
          @Override
          public void onFailure(Call<ResponseBody> call, Throwable t) {
-            Log.d("TourDetail","onFailure");
+            Log.d("TourDetail", "onFailure");
          }
       });
    }

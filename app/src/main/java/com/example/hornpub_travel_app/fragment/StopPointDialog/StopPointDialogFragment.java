@@ -1,4 +1,4 @@
-package com.example.hornpub_travel_app.fragment;
+package com.example.hornpub_travel_app.fragment.StopPointDialog;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -42,29 +42,13 @@ import java.util.Locale;
 
 public class StopPointDialogFragment extends DialogFragment {
    private static final String TAG = "StopPointDialogFragment";
-   int change = -1;
-   private EditText editTextStopPointName, editTextAddress, editTextMinCost, editTextMaxCost;
-   private Spinner spinnerServiceType, spinnerProvince;
-   private TextView textViewTimeArrive, textViewTimeLeave, textViewDateArrive, textViewDateLeave;
-   private ImageButton imageButtonClose;
-   private AddStopPointRequest addStopPointRequest;
-   private StopPoint stopPoint;
-   private String province;
-   private Button buttonList, buttonAdd;
-   public StopPointDialogFragment() {
+   EditText editTextStopPointName, editTextAddress, editTextMinCost, editTextMaxCost;
+   Spinner spinnerServiceType, spinnerProvince;
+   TextView textViewTimeArrive, textViewTimeLeave, textViewDateArrive, textViewDateLeave;
+   ImageButton imageButtonClose;
+   StopPoint stopPoint;
+   Button buttonList, buttonAdd;
 
-   }
-   public static StopPointDialogFragment newInstance(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
-      StopPointDialogFragment fragment = new StopPointDialogFragment();
-      fragment.setData(addStopPointRequest, stopPoint, province);
-      return fragment;
-   }
-
-   public void setData(AddStopPointRequest addStopPointRequest, StopPoint stopPoint, String province) {
-      this.addStopPointRequest = addStopPointRequest;
-      this.stopPoint = stopPoint;
-      this.province = province;
-   }
    @Override
    public void onStart() {
       super.onStart();
@@ -117,20 +101,9 @@ public class StopPointDialogFragment extends DialogFragment {
             timePicker(textViewTimeLeave);
          }
       });
-      buttonAdd.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-            if (getData()) getDialog().dismiss();
-         }
-      });
-      buttonList.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-            showListStopPoint();
-         }
-      });
+
    }
-   private void mapping() {
+   protected void mapping() {
       editTextStopPointName = getView().findViewById(R.id.editTextStopPointName);
       editTextAddress = getView().findViewById(R.id.editTextAddress);
       editTextMinCost = getView().findViewById(R.id.editTextMinCost);
@@ -151,27 +124,22 @@ public class StopPointDialogFragment extends DialogFragment {
       getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
    }
 
-   private void createSpinnerServiceType() throws JSONException {
+   void createSpinnerServiceType() throws JSONException {
       List<String> stringList;
-      ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, readeJSON("service_type"));
+      ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, readJSON("service_type"));
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinnerServiceType.setAdapter(adapter);
    }
 
-   private void createSpinnerProvince() throws JSONException {
-      List<String> stringList = readeJSON("province");
+   protected void createSpinnerProvince() throws JSONException {
+      List<String> stringList = readJSON("province");
       ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, stringList);
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinnerProvince.setAdapter(adapter);
-      if (province != null) {
-         province = province.replace("Province ", "");
-         for (int i = 0; i < stringList.size(); i++)
-            if (stringList.get(i).equals(province))
-               spinnerProvince.setSelection(i);
-      }
+
    }
 
-   private List<String> readeJSON(String name) throws JSONException {
+   protected List<String> readJSON(String name) throws JSONException {
       List<String> stringArrayList = new ArrayList<>();
       String jsonString = "";
       try {
@@ -192,7 +160,7 @@ public class StopPointDialogFragment extends DialogFragment {
       return stringArrayList;
    }
 
-   private void datePicker(final TextView textView) {
+   void datePicker(final TextView textView) {
       final Calendar myCalendar = Calendar.getInstance();
       int day = myCalendar.get(Calendar.DAY_OF_MONTH);
       int month = myCalendar.get(Calendar.MONTH);
@@ -212,7 +180,7 @@ public class StopPointDialogFragment extends DialogFragment {
       }, year, month, day);
       datePickerDialog.show();
    }
-   private void timePicker(final TextView textView) {
+   void timePicker(final TextView textView) {
       final Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR);
       int min = calendar.get(Calendar.MINUTE);
@@ -233,14 +201,15 @@ public class StopPointDialogFragment extends DialogFragment {
       }, hour, min, false);
       timePickerDialog.show();
    }
-   private boolean getData() {
+
+   protected StopPoint getData() {
       if (editTextStopPointName.getText().toString().equals("")) {
          Toast.makeText(getActivity(), "Tên điểm dừng không được rỗng", Toast.LENGTH_SHORT).show();
-         return false;
+         return null;
       }
       if (editTextAddress.getText().toString().equals("")) {
          Toast.makeText(getActivity(), "Địa chỉ không được rỗng", Toast.LENGTH_SHORT).show();
-         return false;
+         return null;
       }
       stopPoint.setName(editTextStopPointName.getText().toString());
       stopPoint.setServiceTypeId(spinnerServiceType.getSelectedItemPosition() + 1);
@@ -252,45 +221,11 @@ public class StopPointDialogFragment extends DialogFragment {
          stopPoint.setMaxCost(Integer.valueOf(editTextMaxCost.getText().toString()));
       stopPoint.setArrivalAt(convertDateTimeToLong(textViewTimeArrive.getText().toString(), textViewDateArrive.getText().toString()));
       stopPoint.setLeaveAt(convertDateTimeToLong(textViewTimeLeave.getText().toString(), textViewDateLeave.getText().toString()));
-      return true;
+      return stopPoint;
    }
    private long convertDateTimeToLong(String time, String date) {
       return 0;
    }
 
-   private void showListStopPoint() {
-      if (addStopPointRequest.getStopPoints().size() < 1) return;
-      final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-      builder.setTitle("List stop point");
-      List<String> nameStopPoints = new ArrayList<>();
-      for (int i = 0; i < addStopPointRequest.getStopPoints().size(); i++) {
-         nameStopPoints.add(addStopPointRequest.getStopPoints().get(i).getName());
-      }
-      CharSequence[] cs = nameStopPoints.toArray(new CharSequence[nameStopPoints.size()]);
-      builder.setItems(cs, new DialogInterface.OnClickListener() {
-         @Override
-         public void onClick(DialogInterface dialogInterface, int i) {
-            stopPoint = addStopPointRequest.getStopPoints().get(i);
-            editTextStopPointName.setText(stopPoint.getName());
-            editTextAddress.setText(stopPoint.getAddress());
-            change = i;
-         }
-      });
-      builder.show();
-   }
-   @Override
-   public void onDismiss(@NonNull DialogInterface dialog) {
-      super.onDismiss(dialog);
-      if (stopPoint.getName() == null) {
-         return;
-      }
-      if (change != -1)
-         addStopPointRequest.getStopPoints().remove(change);
-      addStopPointRequest.getStopPoints().add(stopPoint);
-      final Activity activity = getActivity();
-      if (activity instanceof DialogInterface.OnDismissListener) {
-         ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
-      }
-   }
 
 }

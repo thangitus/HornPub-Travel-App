@@ -21,6 +21,7 @@
         <item name="android:textColorSecondary">@color/colorPrimary</item>
     </style>
 
+
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_out</item>

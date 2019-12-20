@@ -1,11 +1,15 @@
 package com.example.hornpub_travel_app.model;
 
+import com.example.hornpub_travel_app.application.mApplication;
 import com.example.hornpub_travel_app.model.create_tour.StopPoint;
+import com.example.hornpub_travel_app.network.APIService;
+import com.example.hornpub_travel_app.network.NetworkProvider;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Tour {
+public class Tour implements Serializable {
    @SerializedName("id")
    int id;
 
@@ -61,6 +65,7 @@ public class Tour {
    public void setStopPoints(List<StopPoint> stopPoints) {
       this.stopPoints = stopPoints;
    }
+
    public int getId() {
       return id;
    }
@@ -148,5 +153,18 @@ public class Tour {
    public void setAvatar(String avatar) {
       this.avatar = avatar;
    }
-
+   public Tour(Tour tour) {
+      this.id = tour.getId();
+      this.status = tour.getStatus();
+      this.name = tour.getName();
+      this.minCost = tour.getMinCost();
+      this.maxCost = tour.getMaxCost();
+      this.startDate = tour.getStartDate();
+      this.endDate = tour.getEndDate();
+      this.adults = tour.getAdults();
+      this.childs = tour.getChilds();
+      this.isPrivate = tour.getIsPrivate();
+      this.avatar = tour.getAvatar();
+      this.stopPoints = tour.getStopPoints();
+   }
 }

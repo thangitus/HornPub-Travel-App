@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hornpub_travel_app.R;
+import com.example.hornpub_travel_app.adapter.TourListener;
 import com.example.hornpub_travel_app.adapter.TravelListAdapter;
 import com.example.hornpub_travel_app.application.mApplication;
 import com.example.hornpub_travel_app.model.ListTourRequest;
@@ -35,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListTourFragment extends Fragment {
+public class ListTourFragment extends Fragment implements TourListener {
    String token;
    SearchView searchView;
    ListTourResponse listTourResponse;
@@ -82,7 +83,7 @@ public class ListTourFragment extends Fragment {
 
    private void createRecyclerView() {
       TravelListAdapter travelListAdapter;
-      travelListAdapter = new TravelListAdapter(getContext(), tourList,null);
+      travelListAdapter = new TravelListAdapter(getContext(), tourList,this);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
       recyclerView.setLayoutManager(mLayoutManager);
       recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -107,6 +108,10 @@ public class ListTourFragment extends Fragment {
    private void mapping() {
       recyclerView = getView().findViewById(R.id.myRecyclerView);
       buttonAdd = getView().findViewById(R.id.buttonAdd);
+
+   }
+   @Override
+   public void onTourClickListener(int pos) {
 
    }
 }

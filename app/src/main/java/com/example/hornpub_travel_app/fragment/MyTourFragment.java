@@ -1,6 +1,6 @@
 package com.example.hornpub_travel_app.fragment;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hornpub_travel_app.R;
+import com.example.hornpub_travel_app.activity.TourActivity;
 import com.example.hornpub_travel_app.adapter.TourListener;
 import com.example.hornpub_travel_app.adapter.TravelListAdapter;
 import com.example.hornpub_travel_app.application.mApplication;
@@ -39,7 +39,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyTourFragment extends Fragment implements TourListener, DialogInterface.OnDismissListener {
+public class MyTourFragment extends Fragment implements TourListener {
    private static MyTourFragment mInstance = null;
    private final String TAG = "MyTourFragment";
    SearchView searchView;
@@ -70,7 +70,7 @@ public class MyTourFragment extends Fragment implements TourListener, DialogInte
       String token = mApp.getToken();
       Map<String, Number> params = new HashMap<String, Number>();
       params.put("pageIndex", 1);
-      params.put("pageSize", 10);
+      params.put("pageSize", 50);
       Call<ListTourResponse> call = apiService.getHistory(token, params);
 
       call.enqueue(new Callback<ListTourResponse>() {
@@ -112,21 +112,48 @@ public class MyTourFragment extends Fragment implements TourListener, DialogInte
    private void mapping() {
       recyclerView = getView().findViewById(R.id.myTour);
    }
+
    @Override
    public void onTourClickListener(int pos) {
       index = pos;
-      DialogFragment dialogFragment = TourDetailDialogFragment.newInstance(tourList.get(pos));
-      dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
-   }
-   @Override
-   public void onDismiss(DialogInterface dialogInterface) {
-      for (int i = 0; i < tourList.size(); i++) {
-         if (tourList.get(i).getName() == null) {
-            tourList.remove(i);
-            travelListAdapter.notifyItemRemoved(i);
-            return;
+      APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
+      mApplication mApp;
+      mApp = (mApplication) getActivity().getApplicationContext();
+      String token = mApp.getToken();
+      Call<Tour> call = apiService.getTourInfo(token, tourList.get(index).getId());
+//      Call<Tour> call = apiService.getTourInfo(token, 21);
+      call.enqueue(new Callback<Tour>() {
+         @Override
+         public void onResponse(Call<Tour> call, Response<Tour> response) {
+            if (response.code() == 200) {
+               Tour tour = new Tour(response.body());
+               tourList.set(index, tour);
+               Intent intent = new Intent(getActivity(), TourActivity.class);
+               Bundle bundle=new Bundle();
+               bundle.putSerializable("Tour",tourList.get(index));
+               intent.putExtras(bundle);
+               startActivity(intent);
+//               DialogFragment dialogFragment = TourDetailDialogFragment.newInstance(tourList.get(index));
+//               dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
+            }
+
          }
-      }
-      travelListAdapter.notifyItemChanged(index);
+         @Override
+         public void onFailure(Call<Tour> call, Throwable t) {
+
+         }
+      });
+
    }
+//   @Override
+//   public void onDismiss(DialogInterface dialogInterface) {
+//      for (int i = 0; i < tourList.size(); i++) {
+//         if (tourList.get(i).getName() == null) {
+//            tourList.remove(i);
+//            travelListAdapter.notifyItemRemoved(i);
+//            return;
+//         }
+//      }
+//      travelListAdapter.notifyItemChanged(index);
+//   }
 }

@@ -1,7 +1,9 @@
 package com.example.hornpub_travel_app.fragment;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -76,6 +78,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
          }
       });
 
+   }
+   private int checkSelfPermission(String accessFineLocation) {
+      return  1;
    }
 
    @Override
