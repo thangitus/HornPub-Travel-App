@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {
-        applicationId "com.example.hornpub_travel_app"
+        applicationId "com.ygaps.travelapp"
         minSdkVersion 22
         targetSdkVersion 27
         versionCode 1
@@ -25,6 +26,7 @@ buildscript {
     }
 }
 dependencies {
+
     implementation 'com.google.android.material:material:1.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -42,8 +44,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.facebook.android:facebook-login:5.11.0'
-    implementation 'com.google.android.gms:play-services:12.0.1'
+//    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.airbnb.android:lottie:3.2.2'
-
-
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
 }
