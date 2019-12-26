@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.adapter.ViewPagerAdapter;
+import com.ygaps.travelapp.fragment.MemberListFragment;
 import com.ygaps.travelapp.fragment.TourDetailDialogFragment;
 import com.ygaps.travelapp.model.Tour;
-import com.google.android.material.tabs.TabLayout;
 
 public class TourActivity extends AppCompatActivity {
    TabLayout tabLayout;
@@ -39,6 +40,7 @@ public class TourActivity extends AppCompatActivity {
    private void setupViewPager(ViewPager viewPager) {
       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
       adapter.addFrag(TourDetailDialogFragment.newInstance(tour), "Tour Detail");
+      adapter.addFrag(MemberListFragment.newInstance(tour), "User list");
       viewPager.setAdapter(adapter);
    }
    public Tour getTour() {

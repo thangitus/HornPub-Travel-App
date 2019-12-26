@@ -57,7 +57,7 @@ public class TourDetailDialogFragment extends Fragment {
 
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.fragment_dilog_tour_detail, container, false);
+      return inflater.inflate(R.layout.fragment_dialog_tour_detail, container, false);
    }
 
    @Override

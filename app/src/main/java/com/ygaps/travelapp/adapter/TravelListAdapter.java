@@ -18,10 +18,10 @@ import java.util.List;
 public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.MyViewHolder> {
 
    List<Tour> tourList;
-   TourListener tourListener;
+   ItemListener tourListener;
    private LayoutInflater mLayoutInflater;
    private Context mContext;
-   public TravelListAdapter(Context context, List<Tour> tourList, TourListener tourListener) {
+   public TravelListAdapter(Context context, List<Tour> tourList, ItemListener tourListener) {
       this.tourList = tourList;
       this.mContext = context;
       this.tourListener = tourListener;
@@ -44,7 +44,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.My
       holder.view.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            tourListener.onTourClickListener(holder.getAdapterPosition());
+            tourListener.onItemClickListener(holder.getAdapterPosition());
          }
       });
    }
@@ -53,7 +53,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.My
       return tourList.size();
    }
 
-   public class MyViewHolder extends RecyclerView.ViewHolder {
+   class MyViewHolder extends RecyclerView.ViewHolder {
       public ImageView picture;
       public TextView direction, time, customer, price;
       View view;

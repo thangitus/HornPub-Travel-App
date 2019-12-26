@@ -1,9 +1,20 @@
 package com.ygaps.travelapp.application;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.provider.Settings.Secure;
+
+import com.google.firebase.FirebaseApp;
 
 public class mApplication extends Application {
-   private String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MSIsInBob25lIjoiMDE4NzYyMTQzNCIsImVtYWlsIjoibmhhdHJhbmdAZ21haWwuY29tIiwiZXhwIjoxNTc2NDA2NzIwNzQ2LCJhY2NvdW50IjoidXNlciIsImlhdCI6MTU3MzgxNDcyMH0.at7-CUH0I1nwH6Dlq9II4gsvaJ5WGUSKXzNNtvYjG-U";
+   private String token;
+   public String getUserId() {
+      return userId;
+   }
+   public void setUserId(String userId) {
+      this.userId = userId;
+   }
+   private String userId;
    private String avatarBase64 = "";
 
    public String getToken() {
@@ -22,4 +33,10 @@ public class mApplication extends Application {
       this.avatarBase64 = avatarBase64;
    }
 
+   @Override
+   public void onCreate() {
+      super.onCreate();
+      FirebaseApp.initializeApp(this);
+
+   }
 }

@@ -1,14 +1,17 @@
 package com.ygaps.travelapp.network;
 
 import com.ygaps.travelapp.model.ListTourResponse;
+import com.ygaps.travelapp.model.SearchUserResponse;
 import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
+import com.ygaps.travelapp.model.invite_member.InviteMemberRequest;
 import com.ygaps.travelapp.model.user.LoginRequest;
 import com.ygaps.travelapp.model.user.LoginResponse;
 import com.ygaps.travelapp.model.user.RegisterRequest;
 import com.ygaps.travelapp.model.user.RegisterResponse;
+import com.ygaps.travelapp.service.RegisterFirebase;
 
 import java.util.Map;
 
@@ -53,4 +56,12 @@ public interface APIService {
    @POST("/tour/update-stop-point")
    Call<ResponseBody> updateStopPoint(@Header("Authorization") String token, @Body int id, @Body StopPoint stopPoint);
 
+   @POST("/user/notification/put-token")
+   Call<ResponseBody> registerFirebase(@Header("Authorization") String token, @Body RegisterFirebase registerFirebase);
+
+   @GET("/user/search")
+   Call<SearchUserResponse> searchUsers(@Query("searchKey") String searchKey, @Query("pageIndex") int pageIndex, @Query("pageSize") String pageSize);
+
+   @POST("/tour/add/member")
+   Call<ResponseBody> inviteMember(@Header("Authorization") String token, @Body InviteMemberRequest inviteMemberRequest);
 }

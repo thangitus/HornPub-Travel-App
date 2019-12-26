@@ -130,19 +130,9 @@ public class LoginActivity extends AppCompatActivity {
    private void saveLoginResponse(LoginResponse loginResponse) {
       SharedPreferences.Editor editor = mPrefs.edit();
       editor.putString("token", loginResponse.getToken());
+      editor.putString("userId", loginResponse.getUserId());
       editor.apply();
    }
-
-//   private LoginResponse loadLoginResponse() {
-//      Gson gson = new Gson();
-//      String json = mPrefs.getString("LoginResponse", null);
-//      if (json != null) {
-//         LoginResponse loginResponse;
-//         loginResponse = gson.fromJson(json, LoginResponse.class);
-//         return loginResponse;
-//      } else
-//         return null;
-//   }
 
    private void mapping() {
       tvForgotPassWord = findViewById(R.id.textViewForgotPass);

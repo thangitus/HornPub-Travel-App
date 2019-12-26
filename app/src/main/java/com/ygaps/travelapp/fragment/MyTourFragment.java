@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.activity.TourActivity;
-import com.ygaps.travelapp.adapter.TourListener;
+import com.ygaps.travelapp.adapter.ItemListener;
 import com.ygaps.travelapp.adapter.TravelListAdapter;
 import com.ygaps.travelapp.application.mApplication;
 import com.ygaps.travelapp.model.ListTourRequest;
@@ -39,7 +39,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyTourFragment extends Fragment implements TourListener {
+public class MyTourFragment extends Fragment implements ItemListener {
    private static MyTourFragment mInstance = null;
    private final String TAG = "MyTourFragment";
    SearchView searchView;
@@ -114,7 +114,7 @@ public class MyTourFragment extends Fragment implements TourListener {
    }
 
    @Override
-   public void onTourClickListener(int pos) {
+   public void onItemClickListener(int pos) {
       index = pos;
       APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       mApplication mApp;
