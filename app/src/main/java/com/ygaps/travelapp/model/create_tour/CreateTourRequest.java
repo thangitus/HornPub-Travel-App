@@ -11,10 +11,10 @@ public class CreateTourRequest implements Parcelable {
    String name;
 
    @SerializedName("startDate")
-   long startDate;
+   String startDate;
 
    @SerializedName("endDate")
-   long endDate;
+   String endDate;
 
    @SerializedName("sourceLat")
    float sourceLat;
@@ -48,8 +48,8 @@ public class CreateTourRequest implements Parcelable {
 
    public CreateTourRequest() {
       this.name = "";
-      this.startDate = 0;
-      this.endDate = 0;
+      this.startDate = "";
+      this.endDate = "";
       this.sourceLat = 0;
       this.sourceLong = 0;
       this.desLat = 0;
@@ -63,8 +63,8 @@ public class CreateTourRequest implements Parcelable {
 
    protected CreateTourRequest(Parcel in) {
       name = in.readString();
-      startDate = in.readLong();
-      endDate = in.readLong();
+      startDate = in.readString();
+      endDate = in.readString();
       sourceLat = in.readFloat();
       sourceLong = in.readFloat();
       desLat = in.readFloat();
@@ -75,7 +75,6 @@ public class CreateTourRequest implements Parcelable {
       childs = in.readInt();
       minCost = in.readInt();
       maxCost = in.readInt();
-//      avatar = in.readString();
    }
    public static final Creator<CreateTourRequest> CREATOR = new Creator<CreateTourRequest>() {
       @Override
@@ -94,16 +93,16 @@ public class CreateTourRequest implements Parcelable {
    public void setName(String name) {
       this.name = name;
    }
-   public long getStartDate() {
+   public String getStartDate() {
       return startDate;
    }
-   public void setStartDate(long startDate) {
+   public void setStartDate(String startDate) {
       this.startDate = startDate;
    }
-   public long getEndDate() {
+   public String getEndDate() {
       return endDate;
    }
-   public void setEndDate(long endDate) {
+   public void setEndDate(String endDate) {
       this.endDate = endDate;
    }
    public float getSourceLat() {
@@ -160,12 +159,7 @@ public class CreateTourRequest implements Parcelable {
    public void setMaxCost(int maxCost) {
       this.maxCost = maxCost;
    }
-//   public String getAvatar() {
-//      return avatar;
-//   }
-//   public void setAvatar(String avatar) {
-//      this.avatar = avatar;
-//   }
+
    @Override
    public int describeContents() {
       return 0;
@@ -173,8 +167,8 @@ public class CreateTourRequest implements Parcelable {
    @Override
    public void writeToParcel(Parcel parcel, int i) {
       parcel.writeString(name);
-      parcel.writeLong(startDate);
-      parcel.writeLong(endDate);
+      parcel.writeString(startDate);
+      parcel.writeString(endDate);
       parcel.writeFloat(sourceLat);
       parcel.writeFloat(sourceLong);
       parcel.writeFloat(desLat);
@@ -184,6 +178,5 @@ public class CreateTourRequest implements Parcelable {
       parcel.writeInt(childs);
       parcel.writeInt(minCost);
       parcel.writeInt(maxCost);
-//      parcel.writeString(avatar);
    }
 }

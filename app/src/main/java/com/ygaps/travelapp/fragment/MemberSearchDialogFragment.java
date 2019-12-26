@@ -100,7 +100,8 @@ public class MemberSearchDialogFragment extends DialogFragment implements ItemLi
       mApplication mApp;
       mApp = (mApplication) getActivity().getApplicationContext();
       String token = mApp.getToken();
-      InviteMemberRequest inviteMemberRequest = new InviteMemberRequest(String.valueOf(tour.getId()), String.valueOf(users.get(pos).getId()), tour.getIsPrivate());
+      InviteMemberRequest inviteMemberRequest = new InviteMemberRequest(String.valueOf(tour.getId()), String.valueOf(752), tour.getIsPrivate());
+//      InviteMemberRequest inviteMemberRequest = new InviteMemberRequest(String.valueOf(tour.getId()), String.valueOf(users.get(pos).getId()), tour.getIsPrivate());
       Call<ResponseBody> call = apiService.inviteMember(token, inviteMemberRequest);
       call.enqueue(new Callback<ResponseBody>() {
          @Override

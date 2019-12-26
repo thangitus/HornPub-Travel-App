@@ -34,8 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TourDetailDialogFragment extends Fragment {
-   private static final String TAG = "TourDetailDialogFragment";
+public class TourDetailFragment extends Fragment {
+   private static final String TAG = "TourDetailFragment";
    private RadioButton radioButton;
    private Tour tour;
    private EditText editTextTourName, editTextAdult, editTextChildren, editTextMinCost, editTextMaxCost;
@@ -43,11 +43,11 @@ public class TourDetailDialogFragment extends Fragment {
    private Button buttonDelete, buttonUpdate;
    private Spinner spinnerStopPoints;
 
-   public TourDetailDialogFragment() {
+   public TourDetailFragment() {
    }
 
-   public static TourDetailDialogFragment newInstance(Tour tour) {
-      TourDetailDialogFragment fragment = new TourDetailDialogFragment();
+   public static TourDetailFragment newInstance(Tour tour) {
+      TourDetailFragment fragment = new TourDetailFragment();
       fragment.setData(tour);
       return fragment;
    }

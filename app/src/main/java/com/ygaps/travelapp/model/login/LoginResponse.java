@@ -1,4 +1,4 @@
-package com.ygaps.travelapp.model.user;
+package com.ygaps.travelapp.model.login;
 
 import com.google.gson.annotations.SerializedName;
 

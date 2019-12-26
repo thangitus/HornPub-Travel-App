@@ -7,8 +7,10 @@ import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
 import com.ygaps.travelapp.model.invite_member.InviteMemberRequest;
-import com.ygaps.travelapp.model.user.LoginRequest;
-import com.ygaps.travelapp.model.user.LoginResponse;
+import com.ygaps.travelapp.model.login.LoginRequest;
+import com.ygaps.travelapp.model.login.LoginResponse;
+import com.ygaps.travelapp.model.login.PasswordRecoveryRequest;
+import com.ygaps.travelapp.model.login.VerifyOtpRequest;
 import com.ygaps.travelapp.model.user.RegisterRequest;
 import com.ygaps.travelapp.model.user.RegisterResponse;
 import com.ygaps.travelapp.service.RegisterFirebase;
@@ -28,6 +30,15 @@ public interface APIService {
 
    @POST("/user/login")
    Call<LoginResponse> login(@Body LoginRequest loginRequest);
+
+   @POST("/user/login/by-facebook")
+   Call<LoginResponse> loginFacebook(@Body LoginRequest loginRequest);
+
+   @POST("/user/request-otp-recovery")
+   Call<ResponseBody> requestOtp(@Body PasswordRecoveryRequest passwordRecoveryRequest);
+
+   @POST("/user/verify-otp-recovery")
+   Call<ResponseBody> verifyOtp(@Body VerifyOtpRequest verifyOtpRequest);
 
    @POST("/user/register")
    Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
@@ -64,4 +75,8 @@ public interface APIService {
 
    @POST("/tour/add/member")
    Call<ResponseBody> inviteMember(@Header("Authorization") String token, @Body InviteMemberRequest inviteMemberRequest);
+
+   @GET("/user/info")
+   Call<ResponseBody> userInfo(@Header("Authorization") String token);
+
 }

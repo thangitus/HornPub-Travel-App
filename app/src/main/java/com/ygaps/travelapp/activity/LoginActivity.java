@@ -13,15 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
-import com.ygaps.travelapp.model.user.LoginRequest;
-import com.ygaps.travelapp.model.user.LoginResponse;
+import com.ygaps.travelapp.model.login.LoginRequest;
+import com.ygaps.travelapp.model.login.LoginResponse;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
 
@@ -45,15 +50,14 @@ public class LoginActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_login);
+      disconnectFromFacebook();
+      mapping();
+      apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
       intentToSignUp = new Intent(this, SignUpActivity.class);
       intentToForgotPassWord = new Intent(this, ForgotPassWordActivity.class);
       intentToHome = new Intent(this, HomeActivity.class);
-      apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
-      mapping();
       callbackManager = CallbackManager.Factory.create();
-//      loginResponse = loadLoginResponse();
-
       tvSignUp.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
@@ -82,9 +86,28 @@ public class LoginActivity extends AppCompatActivity {
       loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
          @Override
          public void onSuccess(LoginResult loginResult) {
-            Log.d("fb", "success");
-
             String accessToken = loginResult.getAccessToken().getToken();
+            Log.wtf("fb", accessToken);
+            LoginRequest loginRequest=new LoginRequest(accessToken);
+            Call<LoginResponse> call = apiService.loginFacebook(loginRequest);
+            call.enqueue(new Callback<LoginResponse>() {
+               @Override
+               public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                  if (response.code() == 200) {
+                     Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                     loginResponse = new LoginResponse(response.body());
+                     saveLoginResponse(loginResponse);
+                     mApplication mApp;
+                     mApp = (mApplication) getApplicationContext();
+                     mApp.setToken(loginResponse.getToken());
+                     startActivity(intentToHome);
+                  }
+               }
+               @Override
+               public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+               }
+            });
          }
 
          @Override
@@ -100,14 +123,13 @@ public class LoginActivity extends AppCompatActivity {
    }
 
    private void sendLoginRequest(LoginRequest loginRequest) {
-      apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       Call<LoginResponse> call = apiService.login(loginRequest);
       call.enqueue(new Callback<LoginResponse>() {
          @Override
          public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
             //If Success(200 - OK)
-            Toast.makeText(LoginActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
             if (response.code() == 200) {
+               Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                loginResponse = new LoginResponse(response.body());
                saveLoginResponse(loginResponse);
                mApplication mApp;
@@ -167,5 +189,18 @@ public class LoginActivity extends AppCompatActivity {
    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
       callbackManager.onActivityResult(requestCode, resultCode, data);
       super.onActivityResult(requestCode, resultCode, data);
+   }
+
+   private void disconnectFromFacebook() {
+      if (AccessToken.getCurrentAccessToken() == null) {
+         return; // already logged out
+      }
+      new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+              .Callback() {
+         @Override
+         public void onCompleted(GraphResponse graphResponse) {
+            LoginManager.getInstance().logOut();
+         }
+      }).executeAsync();
    }
 }

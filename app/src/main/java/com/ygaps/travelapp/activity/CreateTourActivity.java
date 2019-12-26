@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
+import com.ygaps.travelapp.model.DateTimeConvert;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourResponse;
 
@@ -86,7 +87,11 @@ public class CreateTourActivity extends AppCompatActivity {
          @Override
          public void onClick(View view) {
             if (checkData()) {
-               getData();
+               try {
+                  getData();
+               } catch (ParseException e) {
+                  e.printStackTrace();
+               }
                openCreateStopPointActivity();
             }
          }
@@ -128,7 +133,7 @@ public class CreateTourActivity extends AppCompatActivity {
             myCalendar.set(Calendar.YEAR, i);
             myCalendar.set(Calendar.MONTH, i1);
             myCalendar.set(Calendar.DAY_OF_MONTH, i2);
-            String myFormat = "dd-MM-yyyy";
+            String myFormat = "dd/MM/yyyy";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             textView.setText(sdf.format(myCalendar.getTime()));
             textView.invalidate();
@@ -153,24 +158,11 @@ public class CreateTourActivity extends AppCompatActivity {
       }
       return true;
    }
-
-   private long convertDateToMillisecond(String string) {
-      @SuppressLint("SimpleDateFormat")
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-      Date date = new Date();
-      try {
-         date = formatter.parse(string);
-      } catch (ParseException e) {
-         e.printStackTrace();
-      }
-      return date.getTime();
-   }
-
-   private void getData() {
+   private void getData() throws ParseException {
       createTourRequest = new CreateTourRequest();
       createTourRequest.setName(edtTourName.getText().toString());
-      createTourRequest.setStartDate(convertDateToMillisecond(tvStartDay.getText().toString()));
-      createTourRequest.setEndDate(convertDateToMillisecond(tvEndDay.getText().toString()));
+      createTourRequest.setStartDate(DateTimeConvert.DateToMillisecond(tvStartDay.getText().toString()));
+      createTourRequest.setEndDate(DateTimeConvert.DateToMillisecond(tvEndDay.getText().toString()));
       if (!edtAdults.getText().toString().equals(""))
          createTourRequest.setAdults(Integer.valueOf(edtAdults.getText().toString()));
       if (!edtChildren.getText().toString().equals(""))

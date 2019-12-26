@@ -57,5 +57,23 @@
     <string name="tour_detail">Tour detail</string>
     <string name="stop_point">Stop point</string>
     <string name="remove">Remove</string>
-
+    <string name="edit_profile">Chỉnh sửa thông tin ></string>
+    <string name="switch_language">Thay đổi ngôn ngữ</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="profile_setting">Chỉnh sửa thông tin</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="gender">Gender</string>
+    <string name="DOB">Birth date</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="otp">OTP</string>
+    <string-array name="gender">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+    <string-array name="VI_country_arrays">
+        <item>Tiếng Việt</item>
+        <item>Tiếng Anh</item>
+    </string-array>
 </resources>

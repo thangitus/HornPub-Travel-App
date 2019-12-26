@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ygaps.travelapp.R;
+import com.ygaps.travelapp.model.DateTimeConvert;
 import com.ygaps.travelapp.model.Tour;
 
 import java.util.List;
@@ -38,7 +39,8 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.My
       Tour tour = tourList.get(position);
       holder.picture.setImageResource(R.drawable.demo);
       holder.direction.setText(tour.getName());
-      holder.time.setText(tour.getStartDate());
+      if (tour.getStartDate() != null && tour.getEndDate() != null)
+         holder.time.setText(DateTimeConvert.MillisecondToDate(tour.getStartDate()) + " - " + DateTimeConvert.MillisecondToDate(tour.getEndDate()));
       holder.customer.setText(String.valueOf(tour.getAdults()));
       holder.price.setText(tour.getMinCost());
       holder.view.setOnClickListener(new View.OnClickListener() {
