@@ -68,6 +68,13 @@
     <string name="cancel">Cancel</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="otp">OTP</string>
+    <string name="point">Point</string>
+    <string name="rate_average">Rate average</string>
+    <string name="ratings">Ratings</string>
+    <string name="no_reviews">There are no reviews yet</string>
+    <string name="rate_this_tour">Rate this tour</string>
+    <string name="review">Review</string>
+    <string name="comment">Comment</string>
     <string-array name="gender">
         <item>Nam</item>
         <item>Nữ</item>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.activity.CreateTourActivity;
+import com.ygaps.travelapp.activity.TourActivity;
 import com.ygaps.travelapp.adapter.ItemListener;
 import com.ygaps.travelapp.adapter.TravelListAdapter;
 import com.ygaps.travelapp.application.mApplication;
@@ -46,6 +48,7 @@ public class ListTourFragment extends Fragment implements ItemListener {
    ListTourRequest listTourRequest;
    ImageButton buttonAdd;
    TravelListAdapter travelListAdapter;
+   TextView textViewSummary;
    private RecyclerView recyclerView;
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +88,11 @@ public class ListTourFragment extends Fragment implements ItemListener {
    }
 
    private void createRecyclerView() {
+      for (int i = 0; i < tourList.size(); i++) {
+         if (tourList.get(i).getName().equals("") || tourList.get(i).getStatus() == -1)
+            tourList.remove(i);
+      }
+      textViewSummary.setText(tourList.size() + " trips");
       travelListAdapter = new TravelListAdapter(getContext(), tourList, this);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
       recyclerView.setLayoutManager(mLayoutManager);
@@ -129,11 +137,9 @@ public class ListTourFragment extends Fragment implements ItemListener {
       recyclerView = getView().findViewById(R.id.myRecyclerView);
       buttonAdd = getView().findViewById(R.id.buttonAdd);
       searchView = getView().findViewById(R.id.searchView);
+      textViewSummary = getView().findViewById(R.id.textViewSummary);
    }
-   @Override
-   public void onItemClickListener(int pos) {
 
-   }
    private void searchTour(String string) {
       tourList.clear();
       for (int i = 0; i < tourListSearch.size(); i++) {
@@ -141,5 +147,34 @@ public class ListTourFragment extends Fragment implements ItemListener {
             tourList.add(tourListSearch.get(i));
       }
       travelListAdapter.notifyDataSetChanged();
+   }
+   @Override
+   public void onItemClickListener(int pos) {
+      final int index = pos;
+      APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
+      mApplication mApp;
+      mApp = (mApplication) getActivity().getApplicationContext();
+      String token = mApp.getToken();
+      Call<Tour> call = apiService.getTourInfo(token, tourList.get(index).getId());
+      call.enqueue(new Callback<Tour>() {
+         @Override
+         public void onResponse(Call<Tour> call, Response<Tour> response) {
+            if (response.code() == 200) {
+               Tour tour = new Tour(response.body());
+               tourList.set(index, tour);
+               Intent intent = new Intent(getActivity(), TourActivity.class);
+               Bundle bundle = new Bundle();
+               bundle.putSerializable("Tour", tourList.get(index));
+               intent.putExtras(bundle);
+               startActivity(intent);
+            }
+
+         }
+         @Override
+         public void onFailure(Call<Tour> call, Throwable t) {
+
+         }
+      });
+
    }
 }

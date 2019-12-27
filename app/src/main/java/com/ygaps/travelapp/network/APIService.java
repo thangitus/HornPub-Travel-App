@@ -1,6 +1,8 @@
 package com.ygaps.travelapp.network;
 
+import com.ygaps.travelapp.model.GetReviewResponse;
 import com.ygaps.travelapp.model.ListTourResponse;
+import com.ygaps.travelapp.model.ReviewTourRequest;
 import com.ygaps.travelapp.model.SearchUserResponse;
 import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
@@ -79,4 +81,9 @@ public interface APIService {
    @GET("/user/info")
    Call<ResponseBody> userInfo(@Header("Authorization") String token);
 
+   @GET("/tour/get/review-list")
+   Call<GetReviewResponse> getReview(@Header("Authorization") String token, @Query("tourId") int tourId, @Query("pageIndex") int pageIndex, @Query("pageSize") String pageSize);
+
+  @POST("/tour/add/review")
+   Call<ResponseBody> reviewTour(@Header("Authorization") String token,@Body ReviewTourRequest reviewTourRequest);
 }

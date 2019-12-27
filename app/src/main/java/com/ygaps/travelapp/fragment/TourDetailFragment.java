@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +21,12 @@ import androidx.fragment.app.Fragment;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
 import com.ygaps.travelapp.fragment.StopPointDialog.EditStopPointDialogFragment;
+import com.ygaps.travelapp.model.DateTimeConvert;
 import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +37,13 @@ import retrofit2.Response;
 
 public class TourDetailFragment extends Fragment {
    private static final String TAG = "TourDetailFragment";
+   Boolean isDelete;
    private RadioButton radioButton;
    private Tour tour;
    private EditText editTextTourName, editTextAdult, editTextChildren, editTextMinCost, editTextMaxCost;
    private TextView textViewStartDate, textViewEndDate, textViewAvatar;
    private Button buttonDelete, buttonUpdate;
    private Spinner spinnerStopPoints;
-
    public TourDetailFragment() {
    }
 
@@ -71,15 +72,22 @@ public class TourDetailFragment extends Fragment {
       buttonDelete.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            tour.setName(null);
+            isDelete = true;
+            tour.setStatus(-1);
+            updateTour();
          }
       });
       buttonUpdate.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
+            isDelete = false;
             tour.setName(editTextTourName.getText().toString());
-            tour.setStartDate(textViewStartDate.getText().toString());
-            tour.setEndDate(textViewEndDate.getText().toString());
+            try {
+               tour.setStartDate(DateTimeConvert.DateToMillisecond(textViewStartDate.getText().toString()));
+               tour.setEndDate(DateTimeConvert.DateToMillisecond(textViewEndDate.getText().toString()));
+            } catch (ParseException e) {
+               e.printStackTrace();
+            }
             tour.setAdults(Integer.valueOf(editTextAdult.getText().toString()));
             tour.setChilds(Integer.valueOf(editTextChildren.getText().toString()));
             tour.setMinCost(editTextMinCost.getText().toString());
@@ -110,13 +118,23 @@ public class TourDetailFragment extends Fragment {
       editTextChildren.setText(String.valueOf(tour.getChilds()));
       editTextMinCost.setText(tour.getMinCost());
       editTextMaxCost.setText(tour.getMaxCost());
-      textViewStartDate.setText(tour.getStartDate());
-      textViewEndDate.setText(tour.getEndDate());
+      textViewStartDate.setText(DateTimeConvert.MillisecondToDate(tour.getStartDate()));
+      textViewEndDate.setText(DateTimeConvert.MillisecondToDate(tour.getEndDate()));
+
+      mApplication mApp;
+      mApp = (mApplication) getActivity().getApplicationContext();
+      String userId = mApp.getUserId();
+      if (!userId.equals(String.valueOf(tour.getMembers().get(0).getId()))) {
+         buttonDelete.setVisibility(View.GONE);
+         buttonUpdate.setVisibility(View.GONE);
+         radioButton.setVisibility(View.GONE);
+      }
+
       List<String> stringList = new ArrayList<>();
       stringList.add("Chọn stop point");
-      for (int i = 2; i < tour.getStopPoints().size(); i++)
+      for (int i = 0; i < tour.getStopPoints().size(); i++)
          stringList.add(tour.getStopPoints().get(i).getName());
-      ArrayAdapter<String> adapter = new ArrayAdapter<>(MyTourFragment.getInstance().getActivity(), android.R.layout.simple_spinner_item, stringList);
+      ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, stringList);
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinnerStopPoints.setAdapter(adapter);
       spinnerStopPoints.setSelection(0);
@@ -144,8 +162,10 @@ public class TourDetailFragment extends Fragment {
       call.enqueue(new Callback<ResponseBody>() {
          @Override
          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            if (response.code() == 200)
-               Toast.makeText(MyTourFragment.getInstance().getActivity(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+            if (response.code() == 200) {
+               Log.i(TAG, "Success");
+               if (isDelete) getActivity().finish();
+            }
          }
          @Override
          public void onFailure(Call<ResponseBody> call, Throwable t) {

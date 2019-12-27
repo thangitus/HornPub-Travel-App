@@ -75,7 +75,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/border_radius">
 
@@ -85,8 +85,10 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/buttonCalendarStart"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <ImageButton
                             android:id="@+id/buttonCalendarStart"

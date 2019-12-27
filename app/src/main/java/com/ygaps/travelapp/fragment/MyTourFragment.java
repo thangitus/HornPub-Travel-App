@@ -93,9 +93,11 @@ public class MyTourFragment extends Fragment implements ItemListener {
       });
    }
    private void createRecyclerView() {
+      List<Tour> tours = new ArrayList<>();
       for (int i = 0; i < tourList.size(); i++)
-         if (tourList.get(i).getName().equals(""))
-            tourList.remove(i);
+         if (!tourList.get(i).getName().equals("") && tourList.get(i).getStatus() != -1)
+            tours.add(tourList.get(i));
+      tourList = tours;
       travelListAdapter = new TravelListAdapter(getContext(), tourList, this);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
       recyclerView.setLayoutManager(mLayoutManager);
@@ -121,7 +123,6 @@ public class MyTourFragment extends Fragment implements ItemListener {
       mApp = (mApplication) getActivity().getApplicationContext();
       String token = mApp.getToken();
       Call<Tour> call = apiService.getTourInfo(token, tourList.get(index).getId());
-//      Call<Tour> call = apiService.getTourInfo(token, 21);
       call.enqueue(new Callback<Tour>() {
          @Override
          public void onResponse(Call<Tour> call, Response<Tour> response) {
@@ -129,8 +130,8 @@ public class MyTourFragment extends Fragment implements ItemListener {
                Tour tour = new Tour(response.body());
                tourList.set(index, tour);
                Intent intent = new Intent(getActivity(), TourActivity.class);
-               Bundle bundle=new Bundle();
-               bundle.putSerializable("Tour",tourList.get(index));
+               Bundle bundle = new Bundle();
+               bundle.putSerializable("Tour", tourList.get(index));
                intent.putExtras(bundle);
                startActivity(intent);
             }
@@ -143,15 +144,4 @@ public class MyTourFragment extends Fragment implements ItemListener {
       });
 
    }
-//   @Override
-//   public void onDismiss(DialogInterface dialogInterface) {
-//      for (int i = 0; i < tourList.size(); i++) {
-//         if (tourList.get(i).getName() == null) {
-//            tourList.remove(i);
-//            travelListAdapter.notifyItemRemoved(i);
-//            return;
-//         }
-//      }
-//      travelListAdapter.notifyItemChanged(index);
-//   }
 }

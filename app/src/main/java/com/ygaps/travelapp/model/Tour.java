@@ -47,7 +47,21 @@ public class Tour implements Serializable {
    @SerializedName("members")
    List<User> members;
 
-   public Tour(int id, int status, String name, String minCost, String maxCost, String startDate, String endDate, int adults, int childs, Boolean isPrivate, String avatar) {
+   @SerializedName("hostId")
+   String hostId;
+   public Boolean getPrivate() {
+      return isPrivate;
+   }
+   public void setPrivate(Boolean aPrivate) {
+      isPrivate = aPrivate;
+   }
+   public String getHostId() {
+      return hostId;
+   }
+   public void setHostId(String hostId) {
+      this.hostId = hostId;
+   }
+   public Tour(int id, int status, String name, String minCost, String maxCost, String startDate, String endDate, int adults, int childs, Boolean isPrivate, String avatar,String hostId) {
       this.id = id;
       this.status = status;
       this.name = name;
@@ -59,6 +73,7 @@ public class Tour implements Serializable {
       this.childs = childs;
       this.isPrivate = isPrivate;
       this.avatar = avatar;
+      this.hostId=hostId;
    }
    public Tour(Tour tour) {
       this.id = tour.getId();
