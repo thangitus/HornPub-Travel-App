@@ -15,6 +15,8 @@ import com.ygaps.travelapp.model.login.PasswordRecoveryRequest;
 import com.ygaps.travelapp.model.login.VerifyOtpRequest;
 import com.ygaps.travelapp.model.user.RegisterRequest;
 import com.ygaps.travelapp.model.user.RegisterResponse;
+import com.ygaps.travelapp.model.user.UpdateUserInfoRequest;
+import com.ygaps.travelapp.model.user.UserInfoResponse;
 import com.ygaps.travelapp.service.RegisterFirebase;
 
 import java.util.Map;
@@ -79,11 +81,14 @@ public interface APIService {
    Call<ResponseBody> inviteMember(@Header("Authorization") String token, @Body InviteMemberRequest inviteMemberRequest);
 
    @GET("/user/info")
-   Call<ResponseBody> userInfo(@Header("Authorization") String token);
+   Call<UserInfoResponse> userInfo(@Header("Authorization") String token);
 
    @GET("/tour/get/review-list")
    Call<GetReviewResponse> getReview(@Header("Authorization") String token, @Query("tourId") int tourId, @Query("pageIndex") int pageIndex, @Query("pageSize") String pageSize);
 
-  @POST("/tour/add/review")
-   Call<ResponseBody> reviewTour(@Header("Authorization") String token,@Body ReviewTourRequest reviewTourRequest);
+   @POST("/tour/add/review")
+   Call<ResponseBody> reviewTour(@Header("Authorization") String token, @Body ReviewTourRequest reviewTourRequest);
+
+   @POST("/user/edit-info")
+   Call<ResponseBody> updateInfo(@Header("Authorization") String token, @Body UpdateUserInfoRequest updateUserInfoRequest);
 }

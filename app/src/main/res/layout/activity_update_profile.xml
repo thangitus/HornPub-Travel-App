@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.UpdateProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorBlue"
+        android:theme="@style/ToolbarColoredBackArrow"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/update_profile"
+        app:titleTextColor="@color/colorWhite" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutFullName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/fullName"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextFullNameProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/border_radius"
+                    android:inputType="textCapWords"
+                    android:paddingStart="15dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="20dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/email"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextEmailProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/border_radius"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="15dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="20dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/phone"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextPhoneProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/border_radius"
+                    android:inputType="phone"
+                    android:paddingStart="15dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="20dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearFillGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutPhone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/gender"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonMale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorBlue"
+                        android:text="@string/male" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonFemale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorBlue"
+                        android:text="@string/female" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearFillBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearFillGender">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/birthday"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearFillBirthdayInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/border_radius"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewFillBirthday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="#0000"
+                        android:gravity="center_vertical"
+                        android:paddingStart="20dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="12dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageButtonCalendar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonCalendar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="#0000"
+                        android:scaleType="fitCenter"
+                        android:scaleX="1"
+                        android:scaleY="1"
+                        android:src="@drawable/ic_calendar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonUpdateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/border_radius_solid"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/update"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutConfirmPassword" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

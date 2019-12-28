@@ -11,4 +11,6 @@
     <color name="colorGray">#CCCCCC</color>
     <color name="colorGrayDarker">#949494</color>
     <color name="colorTransparency">#00FFFFFF</color>
+    <color name="colorBlueDark">#5C6C7B</color>
+
 </resources>

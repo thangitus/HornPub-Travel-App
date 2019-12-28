@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".activity.UpdateProfileActivity"
+            android:parentActivityName=".activity.HomeActivity">
+
+        </activity>
         <activity android:name=".activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,23 +30,15 @@
         </activity>
         <activity
             android:name=".activity.TourActivity"
-            android:parentActivityName=".activity.HomeActivity">
-
-        </activity>
+            android:parentActivityName=".activity.HomeActivity"></activity>
         <activity
             android:name=".activity.CreateStopPointActivity"
-            android:parentActivityName=".activity.CreateTourActivity">
-
-        </activity>
+            android:parentActivityName=".activity.CreateTourActivity"></activity>
         <activity
             android:name=".activity.CreateTourActivity"
             android:noHistory="true"
-            android:parentActivityName=".activity.HomeActivity">
-
-        </activity>
-        <activity android:name=".activity.HomeActivity">
-
-        </activity>
+            android:parentActivityName=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.HomeActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -63,10 +60,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.ForgotPassWordActivity">
-
-        </activity>
+        <activity android:name=".activity.ForgotPassWordActivity"></activity>
         <activity
             android:name=".activity.SignUpActivity"
             android:parentActivityName=".activity.LoginActivity"

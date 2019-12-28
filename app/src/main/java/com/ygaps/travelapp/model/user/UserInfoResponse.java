@@ -2,14 +2,14 @@ package com.ygaps.travelapp.model.user;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterResponse {
+public class UserInfoResponse {
    @SerializedName("id")
    int id;
 
    @SerializedName("username")
    String username;
 
-   @SerializedName("full_name")
+   @SerializedName("fullName")
    String full_name;
 
    @SerializedName("email")
@@ -25,7 +25,7 @@ public class RegisterResponse {
    String dob;
 
    @SerializedName("gender")
-   Boolean gender;
+   int gender;
 
    @SerializedName("email_verified")
    Boolean email_verified;
@@ -36,7 +36,7 @@ public class RegisterResponse {
    @SerializedName("avatar")
    String avatar;
 
-   public RegisterResponse(int id, String username, String full_name, String email, String phone, String address, String dob, Boolean gender, Boolean email_verified, Boolean phone_verified, String avatar) {
+   public UserInfoResponse(int id, String username, String full_name, String email, String phone, String address, String dob, int gender, Boolean email_verified, Boolean phone_verified, String avatar) {
       this.id = id;
       this.username = username;
       this.full_name = full_name;
@@ -50,18 +50,18 @@ public class RegisterResponse {
       this.avatar = avatar;
    }
 
-   public RegisterResponse(RegisterResponse registerResponse) {
-      this.id = registerResponse.getId();
-      this.username = registerResponse.getUsername();
-      this.full_name = registerResponse.getFull_name();
-      this.email = registerResponse.getEmail();
-      this.phone = registerResponse.getPhone();
-      this.address = registerResponse.getAddress();
-      this.dob = registerResponse.getDob();
-      this.gender = registerResponse.getGender();
-      this.email_verified = registerResponse.getEmail_verified();
-      this.phone_verified = registerResponse.getPhone_verified();
-      this.avatar = registerResponse.getAvatar();
+   public UserInfoResponse(UserInfoResponse UserInfoResponse) {
+      this.id = UserInfoResponse.getId();
+      this.username = UserInfoResponse.getUsername();
+      this.full_name = UserInfoResponse.getFull_name();
+      this.email = UserInfoResponse.getEmail();
+      this.phone = UserInfoResponse.getPhone();
+      this.address = UserInfoResponse.getAddress();
+      this.dob = UserInfoResponse.getDob();
+      this.gender = UserInfoResponse.getGender();
+      this.email_verified = UserInfoResponse.getEmail_verified();
+      this.phone_verified = UserInfoResponse.getPhone_verified();
+      this.avatar = UserInfoResponse.getAvatar();
    }
    public int getId() {
       return id;
@@ -105,10 +105,10 @@ public class RegisterResponse {
    public void setDob(String dob) {
       this.dob = dob;
    }
-   public Boolean getGender() {
+   public int getGender() {
       return gender;
    }
-   public void setGender(Boolean gender) {
+   public void setGender(int gender) {
       this.gender = gender;
    }
    public Boolean getEmail_verified() {

@@ -45,11 +45,11 @@ public class HomeActivity extends AppCompatActivity {
                loadFragment(fragment);
                return true;
             case R.id.navigationNotification:
-               fragment = new SettingFragment();
+               fragment = new NotificationsFragment();
                loadFragment(fragment);
                return true;
             case R.id.navigationSetting:
-               fragment = new NotificationsFragment();
+               fragment = new SettingFragment();
                loadFragment(fragment);
                return true;
          }
