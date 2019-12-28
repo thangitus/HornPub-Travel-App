@@ -1,20 +1,22 @@
 package com.ygaps.travelapp.network;
 
 import com.ygaps.travelapp.model.GetReviewResponse;
-import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
 import com.ygaps.travelapp.model.ListTourResponse;
 import com.ygaps.travelapp.model.ReviewTourRequest;
 import com.ygaps.travelapp.model.SearchUserResponse;
-import com.ygaps.travelapp.model.google_map.SuggestedDestination;
 import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
+import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
+import com.ygaps.travelapp.model.google_map.SuggestedDestination;
 import com.ygaps.travelapp.model.invite_member.InviteMemberRequest;
 import com.ygaps.travelapp.model.login.LoginRequest;
 import com.ygaps.travelapp.model.login.LoginResponse;
 import com.ygaps.travelapp.model.login.PasswordRecoveryRequest;
 import com.ygaps.travelapp.model.login.VerifyOtpRequest;
+import com.ygaps.travelapp.model.notification.NotificationResponse;
+import com.ygaps.travelapp.model.notification.ResponseInvitation;
 import com.ygaps.travelapp.model.user.RegisterRequest;
 import com.ygaps.travelapp.model.user.RegisterResponse;
 import com.ygaps.travelapp.model.user.UpdateUserInfoRequest;
@@ -95,5 +97,11 @@ public interface APIService {
    Call<ResponseBody> updateInfo(@Header("Authorization") String token, @Body UpdateUserInfoRequest updateUserInfoRequest);
 
    @POST("/tour/suggested-destination-list")
-   Call<SuggestedDestination> getSuggestedDestination(@Header("Authorization") String token,@Body GetSuggestDestinationsRequest request);
+   Call<SuggestedDestination> getSuggestedDestination(@Header("Authorization") String token, @Body GetSuggestDestinationsRequest request);
+
+   @GET("/tour/get/invitation")
+   Call<NotificationResponse> getListTourInvitation(@Header("Authorization") String token, @Query("pageIndex") int pageIndex, @Query("pageSize") int pageSize);
+
+   @POST("/tour/response/invitation")
+   Call<ResponseBody> responseInvitation(@Header("Authorization") String token, @Body ResponseInvitation responseInvitation);
 }

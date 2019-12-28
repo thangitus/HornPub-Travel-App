@@ -79,6 +79,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="birthday">Birthday</string>
+    <string name="notification_example">Nguyễn Văn Thắng sent you an invitation for tour HCM-An Giang</string>
+    <string name="confirm">Confirm</string>
     <string-array name="gender">
         <item>Nam</item>
         <item>Nữ</item>

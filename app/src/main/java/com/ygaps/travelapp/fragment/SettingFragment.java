@@ -18,6 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.activity.LoginActivity;
 import com.ygaps.travelapp.activity.UpdateProfileActivity;
@@ -59,6 +64,7 @@ public class SettingFragment extends Fragment {
       buttonLogout.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
+            disconnectFromFacebook();
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("LoginResponse", Context.MODE_PRIVATE);
             sharedPreferences.edit().clear().commit();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -106,5 +112,17 @@ public class SettingFragment extends Fragment {
             Log.i(TAG, "userInfo failure");
          }
       });
+   }
+   private void disconnectFromFacebook() {
+      if (AccessToken.getCurrentAccessToken() == null) {
+         return; // already logged out
+      }
+      new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+              .Callback() {
+         @Override
+         public void onCompleted(GraphResponse graphResponse) {
+            LoginManager.getInstance().logOut();
+         }
+      }).executeAsync();
    }
 }

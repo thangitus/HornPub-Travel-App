@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_login);
-      disconnectFromFacebook();
       mapping();
       apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
       mPrefs = getSharedPreferences("LoginResponse", MODE_PRIVATE);
@@ -191,16 +190,5 @@ public class LoginActivity extends AppCompatActivity {
       super.onActivityResult(requestCode, resultCode, data);
    }
 
-   private void disconnectFromFacebook() {
-      if (AccessToken.getCurrentAccessToken() == null) {
-         return; // already logged out
-      }
-      new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
-              .Callback() {
-         @Override
-         public void onCompleted(GraphResponse graphResponse) {
-            LoginManager.getInstance().logOut();
-         }
-      }).executeAsync();
-   }
+
 }

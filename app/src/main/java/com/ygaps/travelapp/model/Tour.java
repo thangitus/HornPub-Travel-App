@@ -49,6 +49,8 @@ public class Tour implements Serializable {
 
    @SerializedName("hostId")
    String hostId;
+
+
    public Boolean getPrivate() {
       return isPrivate;
    }
