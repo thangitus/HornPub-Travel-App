@@ -1,9 +1,11 @@
 package com.ygaps.travelapp.network;
 
 import com.ygaps.travelapp.model.GetReviewResponse;
+import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
 import com.ygaps.travelapp.model.ListTourResponse;
 import com.ygaps.travelapp.model.ReviewTourRequest;
 import com.ygaps.travelapp.model.SearchUserResponse;
+import com.ygaps.travelapp.model.google_map.SuggestedDestination;
 import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
@@ -91,4 +93,7 @@ public interface APIService {
 
    @POST("/user/edit-info")
    Call<ResponseBody> updateInfo(@Header("Authorization") String token, @Body UpdateUserInfoRequest updateUserInfoRequest);
+
+   @POST("/tour/suggested-destination-list")
+   Call<SuggestedDestination> getSuggestedDestination(@Header("Authorization") String token,@Body GetSuggestDestinationsRequest request);
 }

@@ -14,8 +14,13 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ygaps.travelapp.R;
@@ -31,14 +36,16 @@ import retrofit2.Response;
 
 public class MyFirebaseService extends FirebaseMessagingService {
    private static final String TAG = "MyFirebaseService";
+   private String tourId;
 
    @Override
    public void onMessageReceived(RemoteMessage remoteMessage) {
       // handle a notification payload.
       if (remoteMessage.getNotification() != null) {
          Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-         sendNotification(remoteMessage.getNotification().getBody());
+         sendNotification("Invite to join a Tour", remoteMessage.getNotification().getBody());
       }
+
    }
 
    @Override
@@ -68,8 +75,25 @@ public class MyFirebaseService extends FirebaseMessagingService {
          }
       });
    }
+   @Override
+   public void onCreate() {
+      super.onCreate();
+      FirebaseInstanceId.getInstance().getInstanceId()
+              .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                 @Override
+                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                    if (!task.isSuccessful()) {
+                       Log.w(TAG, "getInstanceId failed", task.getException());
+                       return;
+                    }
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+                    sendRegistrationToServer(token);
+                 }
+              });
 
-   private void sendNotification(String messageBody) {
+   }
+   private void sendNotification(String title, String messageBody) {
       Intent intent = new Intent(this, HomeActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -81,7 +105,7 @@ public class MyFirebaseService extends FirebaseMessagingService {
               new NotificationCompat.Builder(this, channelId)
                       .setSmallIcon(R.drawable.ic_launcher_background)
                       .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background))
-                      .setContentTitle(getString(R.string.project_id))
+                      .setContentTitle(title)
                       .setContentText(messageBody)
                       .setAutoCancel(true)
                       .setSound(defaultSoundUri)
@@ -110,5 +134,14 @@ public class MyFirebaseService extends FirebaseMessagingService {
       }
 
       notificationManager.notify(0, notificationBuilder.build());
+   }
+
+   private Intent createIntent(String actionName, String messaggeBody) {
+      Intent intent = new Intent(this, ResponseAction.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      intent.putExtra("action", actionName);
+      intent.putExtra("tourId", tourId);
+      intent.putExtra("message", messaggeBody);
+      return intent;
    }
 }

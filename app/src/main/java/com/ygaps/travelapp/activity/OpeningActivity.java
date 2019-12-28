@@ -45,38 +45,6 @@ public class OpeningActivity extends AppCompatActivity {
          mApp.setUserId(mPrefs.getString("userId", null));
          intent = new Intent(this, HomeActivity.class);
       }
-      FirebaseInstanceId.getInstance().getInstanceId()
-              .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                 @Override
-                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                    if (!task.isSuccessful()) {
-                       Log.w(TAG, "getInstanceId failed", task.getException());
-                       return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = task.getResult().getToken();
-                    mApplication mApp;
-                    mApp = (mApplication) getApplicationContext();
-                    String authorization = mApp.getToken();
-                    @SuppressLint("HardwareIds")
-                    String deviceId = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-
-                    APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
-                    RegisterFirebase registerFirebase = new RegisterFirebase(token, deviceId, 1, "1.0");
-                    Call<ResponseBody> call = apiService.registerFirebase(authorization, registerFirebase);
-                    call.enqueue(new Callback<ResponseBody>() {
-                       @Override
-                       public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                          Log.d(TAG, response.message());
-                       }
-                       @Override
-                       public void onFailure(Call<ResponseBody> call, Throwable t) {
-                       }
-                    });
-                 }
-              });
-
       new Thread(new Runnable() {
          @Override
          public void run() {

@@ -38,13 +38,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.clustering.ClusterManager;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
 import com.ygaps.travelapp.fragment.StopPointDialog.AddStopPointDialogFragment;
-import com.ygaps.travelapp.model.DateTimeConvert;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
+import com.ygaps.travelapp.model.google_map.Coordinate;
+import com.ygaps.travelapp.model.google_map.CoordinateSet;
+import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
+import com.ygaps.travelapp.model.google_map.MarkerClusterRenderer;
+import com.ygaps.travelapp.model.google_map.MyItem;
+import com.ygaps.travelapp.model.google_map.SuggestedDestination;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
 
@@ -58,7 +64,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -81,6 +86,8 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
    List<Marker> markerList;
    PolylineOptions polylineOptions;
    AddStopPointRequest addStopPointRequest;
+   SuggestedDestination suggestedDestination;
+   private ClusterManager<MyItem> mClusterManager;
 
    @SuppressLint("HandlerLeak")
    private Handler handler = new Handler() {
@@ -100,6 +107,7 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       setContentView(R.layout.activity_create_stop_point);
       mapping();
       setupView();
+      getSuggest();
       mApp = (mApplication) getApplicationContext();
       Intent intent = getIntent();
       createTourRequest = new CreateTourRequest();
@@ -131,6 +139,11 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       moveCameraToCurrentLocation(14);
       mGoogleMap.setMyLocationEnabled(false);
       mGoogleMap.setOnMapClickListener(googleMapClickListener());
+      mClusterManager = new ClusterManager<MyItem>(this, mGoogleMap);
+      mClusterManager.setRenderer(new MarkerClusterRenderer(this, mGoogleMap, mClusterManager));
+      mGoogleMap.setOnCameraIdleListener(mClusterManager);
+      mGoogleMap.setOnMarkerClickListener(mClusterManager);
+
       LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
       if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
          return;
@@ -145,20 +158,12 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
          }
       });
    }
+
    @RequiresApi(api = Build.VERSION_CODES.M)
    private void moveCameraToCurrentLocation(int zoom) {
       LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-      if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-         // TODO: Consider calling
-         //    Activity#requestPermissions
-         // here to request the missing permissions, and then overriding
-         //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-         //                                          int[] grantResults)
-         // to handle the case where the user grants the permission. See the documentation
-         // for Activity#requestPermissions for more details.
-         return;
-      }
+      @SuppressLint("MissingPermission")
       Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
       LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
       mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -416,6 +421,43 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       if (addStopPointRequest.getStopPoints().size() > 2)
          sendAddStopPoint(addStopPointRequest);
       super.onBackPressed();
-      Log.d(TAG, "back");
+   }
+
+   private void getSuggest() {
+      mApplication mApp = (mApplication) getApplicationContext();
+      List<Coordinate> coordList = new ArrayList<>();
+      coordList.add(new Coordinate(23.352363, 105.263432));
+      coordList.add(new Coordinate(8.597456, 104.916126));
+      coordList.add(new Coordinate(13.753587, 106.626427));
+      coordList.add(new Coordinate(14.109914, 109.288101));
+      List<CoordinateSet> coordinateSets = new ArrayList<>();
+      coordinateSets.add(new CoordinateSet(coordList));
+      final GetSuggestDestinationsRequest request = new GetSuggestDestinationsRequest(false, coordinateSets);
+      APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
+      Call<SuggestedDestination> call = apiService.getSuggestedDestination(mApp.getToken(), request);
+      call.enqueue(new Callback<SuggestedDestination>() {
+         @Override
+         public void onResponse(Call<SuggestedDestination> call, Response<SuggestedDestination> response) {
+            if (response.code() == 200) {
+               suggestedDestination = new SuggestedDestination(response.body());
+               drawMarker();
+            }
+         }
+         @Override
+         public void onFailure(Call<SuggestedDestination> call, Throwable t) {
+         }
+      });
+   }
+   private void drawMarker() {
+      List<StopPoint> stopPoints = suggestedDestination.getStopPoints();
+      for (int i = 0; i < stopPoints.size(); i++) {
+         StopPoint stopPoint = stopPoints.get(i);
+         addMarker(new LatLng(stopPoint.getLat(), stopPoint.getLongitude()), stopPoint.getName(), stopPoint.getServiceTypeId());
+      }
+   }
+
+   private void addMarker(LatLng latLng, String title, int serviceTypeId) {
+      MyItem offsetItem = new MyItem(latLng.latitude, latLng.longitude, serviceTypeId);
+      mClusterManager.addItem(offsetItem);
    }
 }
