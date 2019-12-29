@@ -1,5 +1,6 @@
 package com.ygaps.travelapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.ygaps.travelapp.R;
+import com.ygaps.travelapp.activity.StopPointActivity;
 import com.ygaps.travelapp.application.mApplication;
 import com.ygaps.travelapp.fragment.StopPointDialog.EditStopPointDialogFragment;
 import com.ygaps.travelapp.model.DateTimeConvert;
@@ -44,6 +46,8 @@ public class TourDetailFragment extends Fragment {
    private TextView textViewStartDate, textViewEndDate, textViewAvatar;
    private Button buttonDelete, buttonUpdate;
    private Spinner spinnerStopPoints;
+   private Boolean isMember = false;
+
    public TourDetailFragment() {
    }
 
@@ -58,7 +62,7 @@ public class TourDetailFragment extends Fragment {
 
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.fragment_dialog_tour_detail, container, false);
+      return inflater.inflate(R.layout.fragment_tour_detail, container, false);
    }
 
    @Override
@@ -124,7 +128,6 @@ public class TourDetailFragment extends Fragment {
       mApplication mApp;
       mApp = (mApplication) getActivity().getApplicationContext();
       String userId = mApp.getUserId();
-      Boolean isMember = false;
       for (int i = 0; i < tour.getMembers().size(); i++)
          if (userId.equals(String.valueOf(tour.getMembers().get(i).getId()))) {
             isMember = true;
@@ -149,8 +152,16 @@ public class TourDetailFragment extends Fragment {
          public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if (i == 0) return;
             int index = i - 1;
-            DialogFragment dialogFragment = EditStopPointDialogFragment.newInstance(tour, index);
-            dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
+            if (isMember) {
+               DialogFragment dialogFragment = EditStopPointDialogFragment.newInstance(tour, index);
+               dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
+            } else {
+               Intent intent = new Intent(getActivity(), StopPointActivity.class);
+               Bundle bundle = new Bundle();
+               bundle.putSerializable("StopPoint", tour.getStopPoints().get(index));
+               intent.putExtras(bundle);
+               startActivity(intent);
+            }
          }
          @Override
          public void onNothingSelected(AdapterView<?> adapterView) {

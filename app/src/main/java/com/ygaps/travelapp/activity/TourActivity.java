@@ -39,7 +39,7 @@ public class TourActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_tour_detail);
+      setContentView(R.layout.activity_tour);
       mapping();
       Intent intent = getIntent();
       tour = (Tour) intent.getSerializableExtra("Tour");
@@ -58,9 +58,8 @@ public class TourActivity extends AppCompatActivity {
       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
       adapter.addFrag(TourDetailFragment.newInstance(tour), "Tour Detail");
       adapter.addFrag(MemberListFragment.newInstance(tour), "User list");
-      adapter.addFrag(ReviewListFragment.newInstance(comments, tour.getId()), "Review");
+      adapter.addFrag(ReviewListFragment.newInstance(true, comments, tour.getId()), "Review");
       adapter.addFrag(FollowTourFragment.newInstance(tour), "Follow tour");
-
       viewPager.setAdapter(adapter);
    }
    private void getReview(Tour tour) {

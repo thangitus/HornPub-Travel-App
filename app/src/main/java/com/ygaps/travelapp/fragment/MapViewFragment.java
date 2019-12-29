@@ -1,7 +1,6 @@
 package com.ygaps.travelapp.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -53,7 +52,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      view = inflater.inflate(R.layout.fragment_map, container, false);
+      view = inflater.inflate(R.layout.fragment_explore, container, false);
       return view;
    }
 

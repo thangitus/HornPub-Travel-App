@@ -143,7 +143,14 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       mClusterManager = new ClusterManager<MyItem>(this, mGoogleMap);
       mClusterManager.setRenderer(new MarkerClusterRenderer(this, mGoogleMap, mClusterManager));
       mGoogleMap.setOnCameraIdleListener(mClusterManager);
-      mGoogleMap.setOnMarkerClickListener(mClusterManager);
+      mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+         @Override
+         public boolean onMarkerClick(Marker marker) {
+            stopPoint = searchStopPoint(marker);
+            displayStopPointDialog(addStopPointRequest, stopPoint, "");
+            return false;
+         }
+      });
 
       if (checkPermission()) {
          moveCameraToCurrentLocation(14);
@@ -159,6 +166,16 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
             setCircle(new LatLng(location.getLatitude(), location.getLongitude()));
          }
       });
+   }
+   private StopPoint searchStopPoint(Marker marker) {
+      StopPoint stopPoint = null;
+      for (int i = 0; i < suggestedDestination.getStopPoints().size(); i++)
+         if (suggestedDestination.getStopPoints().get(i).getLat() == marker.getPosition().latitude
+                 && suggestedDestination.getStopPoints().get(i).getLongitude() == marker.getPosition().longitude) {
+            stopPoint = suggestedDestination.getStopPoints().get(i);
+            break;
+         }
+      return stopPoint;
    }
 
    @RequiresApi(api = Build.VERSION_CODES.M)

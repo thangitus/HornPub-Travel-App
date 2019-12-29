@@ -29,18 +29,20 @@ public class ReviewListFragment extends Fragment implements ItemListener {
    List<Comment> reviewLists;
    ImageButton buttonAddReview;
    int tourId;
+   Boolean isTour;
    public ReviewListFragment() {
    }
 
-   public static ReviewListFragment newInstance(List<Comment> comments, int tourId) {
+   public static ReviewListFragment newInstance(Boolean isTour, List<Comment> comments, int tourId) {
       ReviewListFragment fragment = new ReviewListFragment();
-      fragment.setData(comments, tourId);
+      fragment.setData(isTour,comments, tourId);
       return fragment;
    }
 
-   private void setData(List<Comment> comments, int tourId) {
+   private void setData(Boolean isTour, List<Comment> comments, int tourId) {
       this.reviewLists = comments;
       this.tourId = tourId;
+      this.isTour=isTour;
    }
 
    @Override
@@ -56,7 +58,7 @@ public class ReviewListFragment extends Fragment implements ItemListener {
       buttonAddReview.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            DialogFragment dialogFragment = ReviewDialogFragment.newInstance(true, tourId);
+            DialogFragment dialogFragment = ReviewDialogFragment.newInstance(isTour, tourId);
             dialogFragment.show(getActivity().getSupportFragmentManager(), "dialog");
          }
       });

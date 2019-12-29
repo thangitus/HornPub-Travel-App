@@ -1,7 +1,8 @@
 package com.ygaps.travelapp.network;
 
-import com.ygaps.travelapp.model.CoordinateOfMembers;
 import com.ygaps.travelapp.model.CurrentCoordinateRequest;
+import com.ygaps.travelapp.model.feedback_stop_point.FeedBackStopPoint;
+import com.ygaps.travelapp.model.feedback_stop_point.FeedbackStopPointRequest;
 import com.ygaps.travelapp.model.GetReviewResponse;
 import com.ygaps.travelapp.model.ListTourResponse;
 import com.ygaps.travelapp.model.ReviewTourRequest;
@@ -111,4 +112,10 @@ public interface APIService {
 
    @POST("/tour/current-users-coordinate")
    Call<List<Coordinate>> getCoordinateMember(@Header("Authorization") String token, @Body CurrentCoordinateRequest request);
+
+   @GET("/tour/get/feedback-service")
+   Call<FeedBackStopPoint> getFeedbackStopPoint(@Header("Authorization") String token, @Query("serviceId") int serviceId, @Query("pageIndex") int pageIndex, @Query("pageSize") String pageSize);
+
+   @POST("/tour/add/feedback-service")
+   Call<ResponseBody> feedbackStopPoint(@Header("Authorization") String token, @Body FeedbackStopPointRequest request);
 }

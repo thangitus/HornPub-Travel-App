@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
+import com.ygaps.travelapp.model.feedback_stop_point.FeedbackStopPointRequest;
 import com.ygaps.travelapp.model.ReviewTourRequest;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
@@ -82,23 +83,44 @@ public class ReviewDialogFragment extends DialogFragment {
                mApplication mApp;
                mApp = (mApplication) getActivity().getApplicationContext();
                String token = mApp.getToken();
-               ReviewTourRequest reviewTourRequest = new ReviewTourRequest(tourId, (int) ratingBar.getRating(), editTextComment.getText().toString());
                APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
-               Call<ResponseBody> call = apiService.reviewTour(token, reviewTourRequest);
-               call.enqueue(new Callback<ResponseBody>() {
-                  @Override
-                  public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                     if (response.code() == 200)
-                        Log.i(TAG, "Review success, id: " + tourId);
-                     getDialog().dismiss();
-                  }
-                  @Override
-                  public void onFailure(Call<ResponseBody> call, Throwable t) {
-                     Log.i(TAG, "Review fail");
-                     getDialog().dismiss();
-                  }
-               });
+               if (isTour) reviewTour(token, apiService);
+               else reviewStopPoint(token, apiService);
             }
+         }
+      });
+   }
+   private void reviewStopPoint(String token, APIService apiService) {
+      FeedbackStopPointRequest request = new FeedbackStopPointRequest(tourId, (int) ratingBar.getRating(), editTextComment.getText().toString());
+      Call<ResponseBody> call = apiService.feedbackStopPoint(token, request);
+      call.enqueue(new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.code() == 200)
+               Log.i(TAG, "Review success, id: " + tourId);
+            getDialog().dismiss();
+         }
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.i(TAG, "Review fail");
+            getDialog().dismiss();
+         }
+      });
+   }
+   private void reviewTour(String token, APIService apiService) {
+      ReviewTourRequest reviewTourRequest = new ReviewTourRequest(tourId, (int) ratingBar.getRating(), editTextComment.getText().toString());
+      Call<ResponseBody> call = apiService.reviewTour(token, reviewTourRequest);
+      call.enqueue(new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.code() == 200)
+               Log.i(TAG, "Review success, id: " + tourId);
+            getDialog().dismiss();
+         }
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.i(TAG, "Review fail");
+            getDialog().dismiss();
          }
       });
    }
@@ -131,4 +153,5 @@ public class ReviewDialogFragment extends DialogFragment {
          textViewReviewTitle.setText("Rate this stop point");
       }
    }
+
 }

@@ -42,7 +42,8 @@ public class AddStopPointDialogFragment extends StopPointDialogFragment {
       buttonAdd.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            if (getData()!=null) getDialog().dismiss();
+            if (getData() != null)
+               getDialog().dismiss();
          }
       });
       buttonList.setOnClickListener(new View.OnClickListener() {

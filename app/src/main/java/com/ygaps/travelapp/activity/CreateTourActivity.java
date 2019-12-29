@@ -46,7 +46,6 @@ public class CreateTourActivity extends AppCompatActivity {
    RadioButton radioButton;
    ImageButton buttonStartDate, buttonEndDate, buttonAddImg;
    Toolbar toolbar;
-   String token;
    CreateTourResponse createTourResponse;
    CreateTourRequest createTourRequest;
    mApplication mApp;
@@ -58,19 +57,9 @@ public class CreateTourActivity extends AppCompatActivity {
 
       Intent intent = getIntent();
       mapping();
-      token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3MSIsInBob25lIjoiMDE4NzYyMTQzNCIsImVtYWlsIjoibmhhdHJhbmdAZ21haWwuY29tIiwiZXhwIjoxNTc2NDA2NzIwNzQ2LCJhY2NvdW50IjoidXNlciIsImlhdCI6MTU3MzgxNDcyMH0.at7-CUH0I1nwH6Dlq9II4gsvaJ5WGUSKXzNNtvYjG-U";
       toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      buttonAddImg.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
-         }
-      });
       buttonStartDate.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {

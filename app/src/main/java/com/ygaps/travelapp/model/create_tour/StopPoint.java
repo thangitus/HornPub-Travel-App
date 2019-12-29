@@ -152,4 +152,23 @@ public class StopPoint implements Serializable {
    public void setAvatar(String avatar) {
       this.avatar = avatar;
    }
+
+   public StopPoint(StopPoint stopPoint) {
+      this.id = stopPoint.getId();
+      this.name = stopPoint.getName();
+      this.address = stopPoint.getAddress();
+      this.provinceId = stopPoint.getProvinceId();
+      this.lat = stopPoint.getLat();
+      this.longitude = stopPoint.getLongitude();
+      this.arrivalAt = stopPoint.getArrivalAt();
+      this.leaveAt = stopPoint.getLeaveAt();
+      this.serviceTypeId = stopPoint.getServiceTypeId();
+      this.minCost = stopPoint.getMinCost();
+      this.maxCost = stopPoint.getMaxCost();
+      this.avatar = stopPoint.getAvatar();
+      this.timeArrive = stopPoint.getTimeArrive();
+      this.timeLeave = stopPoint.getTimeLeave();
+      this.dateArrive = stopPoint.getDateArrive();
+      this.dateLeave = stopPoint.getDateLeave();
+   }
 }

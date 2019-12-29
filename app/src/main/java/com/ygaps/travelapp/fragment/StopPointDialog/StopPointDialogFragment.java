@@ -60,6 +60,7 @@ public class StopPointDialogFragment extends DialogFragment {
       super.onViewCreated(view, savedInstanceState);
       mapping();
       editTextAddress.setText(this.stopPoint.getAddress());
+      editTextStopPointName.setText(this.stopPoint.getName());
       try {
          createSpinnerServiceType();
          createSpinnerProvince();
@@ -132,7 +133,6 @@ public class StopPointDialogFragment extends DialogFragment {
       ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, stringList);
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinnerProvince.setAdapter(adapter);
-
    }
 
    protected List<String> readJSON(String name) throws JSONException {
@@ -222,6 +222,5 @@ public class StopPointDialogFragment extends DialogFragment {
    private long convertDateTimeToLong(String time, String date) {
       return 0;
    }
-
 
 }

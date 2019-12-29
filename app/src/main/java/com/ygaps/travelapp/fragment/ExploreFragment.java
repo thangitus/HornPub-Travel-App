@@ -3,6 +3,7 @@ package com.ygaps.travelapp.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -29,8 +30,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
 import com.ygaps.travelapp.R;
+import com.ygaps.travelapp.activity.StopPointActivity;
 import com.ygaps.travelapp.application.mApplication;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
 import com.ygaps.travelapp.model.google_map.Coordinate;
@@ -59,6 +62,9 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    private ImageButton buttonMyLocation;
    private SuggestedDestination suggestedDestination;
    private ClusterManager<MyItem> mClusterManager;
+   private List<StopPoint> stopPoints;
+   private List<LatLng> latLngListStopPoint;
+
    public ExploreFragment() {
       // Required empty public constructor
    }
@@ -66,7 +72,7 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      view = inflater.inflate(R.layout.fragment_map, container, false);
+      view = inflater.inflate(R.layout.fragment_explore, container, false);
       return view;
    }
 
@@ -78,8 +84,20 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
       mClusterManager = new ClusterManager<MyItem>(getContext(), mGoogleMap);
       mClusterManager.setRenderer(new MarkerClusterRenderer(getContext(), mGoogleMap, mClusterManager));
       mGoogleMap.setOnCameraIdleListener(mClusterManager);
-      mGoogleMap.setOnMarkerClickListener(mClusterManager);
-
+      mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+         @Override
+         public boolean onMarkerClick(Marker marker) {
+            Intent intent = new Intent(getActivity(), StopPointActivity.class);
+            Bundle bundle = new Bundle();
+            StopPoint stopPoint = searchStopPoint(marker);
+            if (stopPoint != null) {
+               bundle.putSerializable("StopPoint", stopPoint);
+               intent.putExtras(bundle);
+               startActivity(intent);
+            }
+            return false;
+         }
+      });
       if (checkPermission()) {
          moveCameraToCurrentLocation(14);
          LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -95,8 +113,14 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
          }
       });
    }
-   private int checkSelfPermission(String accessFineLocation) {
-      return 1;
+   private StopPoint searchStopPoint(Marker marker) {
+      StopPoint stopPoint = null;
+      for (int i = 0; i < stopPoints.size(); i++)
+         if (stopPoints.get(i).getLat() == marker.getPosition().latitude
+                 && stopPoints.get(i).getLongitude() == marker.getPosition().longitude) {
+            stopPoint = stopPoints.get(i);
+         }
+      return stopPoint;
    }
 
    @Override
@@ -111,6 +135,29 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
             moveCameraToCurrentLocation(15);
          }
       });
+      searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+         @Override
+         public boolean onQueryTextSubmit(String s) {
+            return false;
+         }
+         @Override
+         public boolean onQueryTextChange(String s) {
+            for (int i = 0; i < stopPoints.size(); i++)
+               if (stopPoints.get(i).getName().contains(s)) {
+                  mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngListStopPoint.get(i), 19));
+                  break;
+               }
+
+            return false;
+         }
+      });
+      searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+         @Override
+         public boolean onClose() {
+            moveCameraToCurrentLocation(15);
+            return false;
+         }
+      });
    }
 
    private void setupView() {
@@ -122,7 +169,7 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    }
 
    private void mapping() {
-      searchView = getView().findViewById(R.id.searchView);
+      searchView = getView().findViewById(R.id.searchViewExplore);
       mapView = view.findViewById(R.id.mapView);
       buttonMyLocation = view.findViewById(R.id.buttonMyLocation);
 
@@ -170,6 +217,7 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
          public void onResponse(Call<SuggestedDestination> call, Response<SuggestedDestination> response) {
             if (response.code() == 200) {
                suggestedDestination = new SuggestedDestination(response.body());
+               stopPoints = suggestedDestination.getStopPoints();
                drawMarker();
             }
          }
@@ -179,10 +227,12 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
       });
    }
    private void drawMarker() {
-      List<StopPoint> stopPoints = suggestedDestination.getStopPoints();
+      latLngListStopPoint = new ArrayList<>();
       for (int i = 0; i < stopPoints.size(); i++) {
          StopPoint stopPoint = stopPoints.get(i);
-         addMarker(new LatLng(stopPoint.getLat(), stopPoint.getLongitude()), stopPoint.getName(), stopPoint.getServiceTypeId());
+         LatLng latLng = new LatLng(stopPoint.getLat(), stopPoint.getLongitude());
+         latLngListStopPoint.add(latLng);
+         addMarker(latLng, stopPoint.getName(), stopPoint.getServiceTypeId());
       }
    }
 
