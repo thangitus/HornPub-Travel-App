@@ -1,5 +1,7 @@
 package com.ygaps.travelapp.network;
 
+import com.ygaps.travelapp.model.CoordinateOfMembers;
+import com.ygaps.travelapp.model.CurrentCoordinateRequest;
 import com.ygaps.travelapp.model.GetReviewResponse;
 import com.ygaps.travelapp.model.ListTourResponse;
 import com.ygaps.travelapp.model.ReviewTourRequest;
@@ -8,6 +10,7 @@ import com.ygaps.travelapp.model.Tour;
 import com.ygaps.travelapp.model.create_tour.AddStopPointRequest;
 import com.ygaps.travelapp.model.create_tour.CreateTourRequest;
 import com.ygaps.travelapp.model.create_tour.StopPoint;
+import com.ygaps.travelapp.model.google_map.Coordinate;
 import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
 import com.ygaps.travelapp.model.google_map.SuggestedDestination;
 import com.ygaps.travelapp.model.invite_member.InviteMemberRequest;
@@ -23,6 +26,7 @@ import com.ygaps.travelapp.model.user.UpdateUserInfoRequest;
 import com.ygaps.travelapp.model.user.UserInfoResponse;
 import com.ygaps.travelapp.service.RegisterFirebase;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -104,4 +108,7 @@ public interface APIService {
 
    @POST("/tour/response/invitation")
    Call<ResponseBody> responseInvitation(@Header("Authorization") String token, @Body ResponseInvitation responseInvitation);
+
+   @POST("/tour/current-users-coordinate")
+   Call<List<Coordinate>> getCoordinateMember(@Header("Authorization") String token, @Body CurrentCoordinateRequest request);
 }

@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.adapter.ViewPagerAdapter;
 import com.ygaps.travelapp.application.mApplication;
+import com.ygaps.travelapp.fragment.FollowTourFragment;
 import com.ygaps.travelapp.fragment.MemberListFragment;
 import com.ygaps.travelapp.fragment.ReviewListFragment;
 import com.ygaps.travelapp.fragment.TourDetailFragment;
@@ -46,6 +47,7 @@ public class TourActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getReview(tour);
       tabLayout.setupWithViewPager(viewPager);
+      viewPager.setOffscreenPageLimit(0);
    }
    private void mapping() {
       toolbar = findViewById(R.id.toolbar);
@@ -56,7 +58,9 @@ public class TourActivity extends AppCompatActivity {
       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
       adapter.addFrag(TourDetailFragment.newInstance(tour), "Tour Detail");
       adapter.addFrag(MemberListFragment.newInstance(tour), "User list");
-      adapter.addFrag(ReviewListFragment.newInstance(comments,tour.getId()), "Review");
+      adapter.addFrag(ReviewListFragment.newInstance(comments, tour.getId()), "Review");
+      adapter.addFrag(FollowTourFragment.newInstance(tour), "Follow tour");
+
       viewPager.setAdapter(adapter);
    }
    private void getReview(Tour tour) {

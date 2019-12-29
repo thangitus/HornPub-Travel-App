@@ -82,7 +82,7 @@ public class ReviewDialogFragment extends DialogFragment {
                mApplication mApp;
                mApp = (mApplication) getActivity().getApplicationContext();
                String token = mApp.getToken();
-               ReviewTourRequest reviewTourRequest = new ReviewTourRequest(tourId, ratingBar.getNumStars(), editTextComment.getText().toString());
+               ReviewTourRequest reviewTourRequest = new ReviewTourRequest(tourId, (int) ratingBar.getRating(), editTextComment.getText().toString());
                APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
                Call<ResponseBody> call = apiService.reviewTour(token, reviewTourRequest);
                call.enqueue(new Callback<ResponseBody>() {

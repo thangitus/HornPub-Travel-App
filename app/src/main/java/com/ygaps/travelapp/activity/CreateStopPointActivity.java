@@ -22,6 +22,8 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -136,7 +138,6 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       markerList = new ArrayList<>();
       MapsInitializer.initialize(this);
       mGoogleMap = googleMap;
-      moveCameraToCurrentLocation(14);
       mGoogleMap.setMyLocationEnabled(false);
       mGoogleMap.setOnMapClickListener(googleMapClickListener());
       mClusterManager = new ClusterManager<MyItem>(this, mGoogleMap);
@@ -144,13 +145,14 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
       mGoogleMap.setOnCameraIdleListener(mClusterManager);
       mGoogleMap.setOnMarkerClickListener(mClusterManager);
 
-      LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-      if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-         return;
+      if (checkPermission()) {
+         moveCameraToCurrentLocation(14);
+         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+         setCircle(latLng);
       }
-      Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-      LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-      setCircle(latLng);
+
       mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
          @Override
          public void onMyLocationChange(Location location) {
@@ -459,5 +461,11 @@ public class CreateStopPointActivity extends AppCompatActivity implements OnMapR
    private void addMarker(LatLng latLng, String title, int serviceTypeId) {
       MyItem offsetItem = new MyItem(latLng.latitude, latLng.longitude, serviceTypeId);
       mClusterManager.addItem(offsetItem);
+   }
+   private Boolean checkPermission() {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+         return false;
+      } else return true;
    }
 }

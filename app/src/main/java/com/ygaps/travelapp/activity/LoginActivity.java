@@ -1,8 +1,10 @@
 package com.ygaps.travelapp.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,14 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.ygaps.travelapp.R;
@@ -29,12 +26,15 @@ import com.ygaps.travelapp.model.login.LoginRequest;
 import com.ygaps.travelapp.model.login.LoginResponse;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
+import com.ygaps.travelapp.service.RegisterFirebase;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+   private static final String TAG = "LoginActivity";
    TextView tvSignUp, tvForgotPassWord;
    Intent intentToSignUp, intentToForgotPassWord, intentToHome;
    APIService apiService;
@@ -86,8 +86,7 @@ public class LoginActivity extends AppCompatActivity {
          @Override
          public void onSuccess(LoginResult loginResult) {
             String accessToken = loginResult.getAccessToken().getToken();
-            Log.wtf("fb", accessToken);
-            LoginRequest loginRequest=new LoginRequest(accessToken);
+            LoginRequest loginRequest = new LoginRequest(accessToken);
             Call<LoginResponse> call = apiService.loginFacebook(loginRequest);
             call.enqueue(new Callback<LoginResponse>() {
                @Override
@@ -134,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                mApplication mApp;
                mApp = (mApplication) getApplicationContext();
                mApp.setToken(loginResponse.getToken());
+               sendRegistrationToServer();
                startActivity(intentToHome);
             }
             if (response.code() == 400) {
@@ -180,15 +180,36 @@ public class LoginActivity extends AppCompatActivity {
       return true;
    }
 
-   private void sendLoginFbRequest(String accessToken) {
-
-   }
-
    @Override
    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
       callbackManager.onActivityResult(requestCode, resultCode, data);
       super.onActivityResult(requestCode, resultCode, data);
    }
 
+   private void sendRegistrationToServer() {
+      mApplication mApp;
+      mApp = (mApplication) getApplicationContext();
+      String authorization = mApp.getToken();
+      SharedPreferences mPrefs = getSharedPreferences("Firebase", MODE_PRIVATE);
+      String token = mPrefs.getString("NewToken", null);
 
+      @SuppressLint("HardwareIds")
+      String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+      APIService apiService = NetworkProvider.getInstance().getRetrofit().create(APIService.class);
+      RegisterFirebase registerFirebase = new RegisterFirebase(token, deviceId, 1, "1.0");
+
+      Call<ResponseBody> call = apiService.registerFirebase(authorization, registerFirebase);
+      call.enqueue(new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            Log.d(TAG, response.message());
+         }
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.d(TAG, t.toString());
+
+         }
+      });
+   }
 }

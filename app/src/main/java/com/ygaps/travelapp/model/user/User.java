@@ -12,6 +12,9 @@ public class User implements Serializable {
 
    String phone, avatar;
 
+   @SerializedName("fullName")
+   String fullName;
+
    public User(User user) {
       this.id = user.getId();
       this.name = user.getName();
@@ -19,6 +22,12 @@ public class User implements Serializable {
       this.avatar = user.getAvatar();
    }
 
+   public String getFullName() {
+      return fullName;
+   }
+   public void setFullName(String fullName) {
+      this.fullName = fullName;
+   }
    public int getId() {
       return id;
    }

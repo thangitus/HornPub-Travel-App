@@ -63,7 +63,7 @@ public class ListTourFragment extends Fragment implements ItemListener {
       mApp = (mApplication) getActivity().getApplicationContext();
       token = mApp.getToken();
       Map<String, String> params = new HashMap<String, String>();
-      params.put("rowPerPage", "40");
+      params.put("rowPerPage", "120");
       params.put("pageNum", String.valueOf((int) (Math.random() * 50)));
       Call<ListTourResponse> call = apiService.getListTour(token, params);
 
@@ -88,9 +88,16 @@ public class ListTourFragment extends Fragment implements ItemListener {
    }
 
    private void createRecyclerView() {
+      List<Tour> tours = new ArrayList<>();
       for (int i = 0; i < tourList.size(); i++) {
-         if (tourList.get(i).getName().equals("") || tourList.get(i).getStatus() == -1)
-            tourList.remove(i);
+         if (tourList.get(i).getName() == null) continue;
+         if (!tourList.get(i).getName().equals("") && tourList.get(i).getStatus() != -1)
+            tours.add(tourList.get(i));
+      }
+      tourList = tours;
+      if (tourList.size() == 0) {
+         sendListTourRequest(listTourRequest);
+         return;
       }
       textViewSummary.setText(tourList.size() + " trips");
       travelListAdapter = new TravelListAdapter(getContext(), tourList, this);

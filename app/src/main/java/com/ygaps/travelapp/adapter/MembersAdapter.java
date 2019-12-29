@@ -38,10 +38,6 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
    @Override
    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
       User member = memberList.get(position);
-      if (member.getName() == null || member.getName().equals(""))
-         holder.name.setText("Null");
-      else
-         holder.name.setText(member.getName());
       if (member.getPhone() == null || member.getPhone().equals(""))
          holder.phone.setText("Null");
       holder.phone.setText(member.getPhone());
@@ -53,6 +49,16 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
             itemListener.onItemClickListener(holder.getAdapterPosition());
          }
       });
+      if (member.getName() == null || member.getName().equals(""))
+         holder.name.setText("Null");
+      else{
+         holder.name.setText(member.getName());
+         return;
+      }
+      if (member.getFullName() == null || member.getFullName().equals(""))
+         holder.name.setText("Null");
+      else
+         holder.name.setText(member.getFullName());
    }
 
    @Override

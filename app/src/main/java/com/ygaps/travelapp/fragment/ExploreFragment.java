@@ -17,6 +17,8 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,17 +29,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
 import com.ygaps.travelapp.R;
 import com.ygaps.travelapp.application.mApplication;
+import com.ygaps.travelapp.model.create_tour.StopPoint;
 import com.ygaps.travelapp.model.google_map.Coordinate;
 import com.ygaps.travelapp.model.google_map.CoordinateSet;
 import com.ygaps.travelapp.model.google_map.GetSuggestDestinationsRequest;
 import com.ygaps.travelapp.model.google_map.MarkerClusterRenderer;
 import com.ygaps.travelapp.model.google_map.MyItem;
 import com.ygaps.travelapp.model.google_map.SuggestedDestination;
-import com.ygaps.travelapp.model.create_tour.StopPoint;
 import com.ygaps.travelapp.network.APIService;
 import com.ygaps.travelapp.network.NetworkProvider;
 
@@ -56,10 +57,8 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    private SearchView searchView;
    private Circle firstCircle, secondCircle;
    private ImageButton buttonMyLocation;
-   Boolean mLocationPermissionGranted;
    private SuggestedDestination suggestedDestination;
    private ClusterManager<MyItem> mClusterManager;
-
    public ExploreFragment() {
       // Required empty public constructor
    }
@@ -75,20 +74,20 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    public void onMapReady(GoogleMap googleMap) {
       MapsInitializer.initialize(getContext());
       mGoogleMap = googleMap;
-      moveCameraToCurrentLocation(14);
       mGoogleMap.setMyLocationEnabled(false);
       mClusterManager = new ClusterManager<MyItem>(getContext(), mGoogleMap);
       mClusterManager.setRenderer(new MarkerClusterRenderer(getContext(), mGoogleMap, mClusterManager));
       mGoogleMap.setOnCameraIdleListener(mClusterManager);
       mGoogleMap.setOnMarkerClickListener(mClusterManager);
 
-      LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-      if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-         return;
+      if (checkPermission()) {
+         moveCameraToCurrentLocation(14);
+         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+         @SuppressLint("MissingPermission")
+         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+         setCircle(latLng);
       }
-      Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-      LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-      setCircle(latLng);
       mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
          @Override
          public void onMyLocationChange(Location location) {
@@ -132,7 +131,6 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    @RequiresApi(api = Build.VERSION_CODES.M)
    private void moveCameraToCurrentLocation(int zoom) {
       LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
       @SuppressLint("MissingPermission")
       Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -191,5 +189,11 @@ public class ExploreFragment extends Fragment implements OnMapReadyCallback {
    private void addMarker(LatLng latLng, String title, int serviceTypeId) {
       MyItem offsetItem = new MyItem(latLng.latitude, latLng.longitude, serviceTypeId);
       mClusterManager.addItem(offsetItem);
+   }
+   private Boolean checkPermission() {
+      if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+         return false;
+      } else return true;
    }
 }

@@ -94,9 +94,11 @@ public class MyTourFragment extends Fragment implements ItemListener {
    }
    private void createRecyclerView() {
       List<Tour> tours = new ArrayList<>();
-      for (int i = 0; i < tourList.size(); i++)
+      for (int i = 0; i < tourList.size(); i++) {
+         if (tourList.get(i).getName() == null) continue;
          if (!tourList.get(i).getName().equals("") && tourList.get(i).getStatus() != -1)
             tours.add(tourList.get(i));
+      }
       tourList = tours;
       travelListAdapter = new TravelListAdapter(getContext(), tourList, this);
       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

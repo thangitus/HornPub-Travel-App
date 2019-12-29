@@ -31,6 +31,7 @@ public class ReviewListFragment extends Fragment implements ItemListener {
    int tourId;
    public ReviewListFragment() {
    }
+
    public static ReviewListFragment newInstance(List<Comment> comments, int tourId) {
       ReviewListFragment fragment = new ReviewListFragment();
       fragment.setData(comments, tourId);
@@ -89,6 +90,5 @@ public class ReviewListFragment extends Fragment implements ItemListener {
    }
    @Override
    public void onItemClickListener(int pos) {
-
    }
 }

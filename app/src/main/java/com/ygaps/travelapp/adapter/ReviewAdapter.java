@@ -47,7 +47,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
       if (comment.getAvatar() != null && !comment.getAvatar().equals(""))
          Glide.with(context).load(comment.getAvatar()).into(holder.avt);
       holder.ratingBar.setRating(comment.getPoint());
-      holder.textViewComment.setText(comment.getReview());
+
+      if (comment.getReview() != null)
+         holder.textViewComment.setText(comment.getReview());
+      if (comment.getFeedback() != null)
+         holder.textViewComment.setText(comment.getFeedback());
+
       holder.view.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {

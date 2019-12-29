@@ -1,7 +1,7 @@
 package com.ygaps.travelapp.model;
 
 public class Comment {
-   String id, name, review, avatar, createdOn;
+   String id, name, review, avatar, createdOn, feedback;
    int point;
    public Comment(Comment comment) {
       this.id = comment.getId();
@@ -10,6 +10,13 @@ public class Comment {
       this.avatar = comment.getAvatar();
       this.createdOn = comment.getCreatedOn();
       this.point = comment.getPoint();
+      this.feedback = comment.getFeedback();
+   }
+   public String getFeedback() {
+      return feedback;
+   }
+   public void setFeedback(String feedback) {
+      this.feedback = feedback;
    }
    public String getId() {
       return id;

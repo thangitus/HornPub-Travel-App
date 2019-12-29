@@ -124,7 +124,13 @@ public class TourDetailFragment extends Fragment {
       mApplication mApp;
       mApp = (mApplication) getActivity().getApplicationContext();
       String userId = mApp.getUserId();
-      if (!userId.equals(String.valueOf(tour.getMembers().get(0).getId()))) {
+      Boolean isMember = false;
+      for (int i = 0; i < tour.getMembers().size(); i++)
+         if (userId.equals(String.valueOf(tour.getMembers().get(i).getId()))) {
+            isMember = true;
+            break;
+         }
+      if (!isMember) {
          buttonDelete.setVisibility(View.GONE);
          buttonUpdate.setVisibility(View.GONE);
          radioButton.setVisibility(View.GONE);
